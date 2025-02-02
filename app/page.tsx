@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 
 type CartItem = {
@@ -57,6 +57,20 @@ const App: React.FC = () => {
   };
 
   const buy = () => {
+    if (cartItems.length === 0) {
+      alert("Seu carrinho está vazio!");
+      return;
+    }
+
+    const phoneNumber = "+5521991453401"; 
+    let message = "Olá! Gostaria de finalizar meu pedido:%0A";
+    cartItems.forEach((item, index) => {
+      message += `${index + 1}. ${item.name} (x${item.quantity})%0A`;
+    });
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+    window.open(whatsappUrl, "_blank");
+
     setPurchaseMessageVisible(true);
     setTimeout(() => setPurchaseMessageVisible(false), 3000);
     clearCart();
@@ -65,28 +79,25 @@ const App: React.FC = () => {
   return (
     <div className="bg-pink-100 text-center">
       <header className="flex justify-between p-4 bg-pink-200 shadow-md">
-      <img src="/img/Logo.jpg" alt="Logo" className="w-16" />
+        <img src="/img/Logo.jpg" alt="Logo" className="w-16" />
         <div onClick={toggleCart} className="cursor-pointer bg-white p-2 rounded-md">
           🛒 <span>{cartCount}</span>
         </div>
       </header>
 
       <main className="p-4">
-      {['Trufa de Brigadeiro', 'Trufa de Limão'].map((product, idx) => (
-  <div
-    key={idx}
-    className="inline-block w-48 h-72 p-4 m-4 bg-white rounded-lg shadow-md text-center cursor-pointer"
-    onClick={() => addToCart(product, `/img/${product}.jpg`)}
-  >
-    <img src={`/img/${product}.jpg`} alt={product} className="w-full h-48 rounded-md" />
-    
-    <p>{product}  R$2,00</p>
-  </div>
-))}
-
+        {["Trufa de Brigadeiro", "Trufa de Limão"].map((product, idx) => (
+          <div
+            key={idx}
+            className="inline-block w-48 h-72 p-4 m-4 bg-white rounded-lg shadow-md text-center cursor-pointer"
+            onClick={() => addToCart(product, `/img/${product}.jpg`)}
+          >
+            <img src={`/img/${product}.jpg`} alt={product} className="w-full h-48 rounded-md" />
+            <p>{product} R$2,00</p>
+          </div>
+        ))}
       </main>
 
-      {/* Carrinho */}
       {isCartVisible && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 shadow-lg max-h-80 overflow-y-auto w-80">
           <button onClick={toggleCart} className="absolute top-2 right-2 text-xl">❌</button>
@@ -97,7 +108,6 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Mensagens */}
       {addMessageVisible && (
         <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white p-2 rounded-md">
           Produto adicionado ao carrinho!
