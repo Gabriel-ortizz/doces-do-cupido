@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   const products: Product[] = [
     { 
-      name: "Barra de Chocolate", 
+      name: "Trufa De Brigadeiro", 
       image: "/img/Trufa De Brigadeiro.jpg", 
       options: [
         { name: "Ao Leite", price: 2.00 },
