@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Image from 'next/image';
 
 type CartItem = {
   name: string;
@@ -72,7 +73,9 @@ const Cart: React.FC<CartProps> = ({
                 className="flex items-center justify-between mb-4 border-b pb-2"
               >
                 <div className="flex items-center">
-                  <img
+                  <Image
+                  width={10}
+                  height={10}
                     src={item.image}
                     alt={item.name}
                     className="w-16 h-16 object-cover rounded-lg mr-4"

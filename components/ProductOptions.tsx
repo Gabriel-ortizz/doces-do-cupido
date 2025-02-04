@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 type Option = {
@@ -28,7 +29,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({ product, options, onAdd
     <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg w-80 sm:w-96 rounded-lg">
       <h2 className="text-xl mb-4 text-gray-800">Escolha uma opção para {product}</h2>
       <div className="flex items-center mb-4">
-        <img src={`/img/${product}.jpg`} alt={product} className="w-16 h-16 object-cover rounded-md mr-4" />
+        <Image width={10} height={10} src={`/img/${product}.jpg`} alt={product} className="w-16 h-16 object-cover rounded-md mr-4" />
         <span className="text-lg text-gray-700">{product}</span>
       </div>
 
