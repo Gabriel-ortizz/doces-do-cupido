@@ -44,7 +44,7 @@ const App: React.FC = () => {
     },
     { 
       name: "Trufa de Limão", 
-      image: "/img/Trufa De Limão.jpg",  
+      image: "/img/Trufa De Brigadeiro.jpg",  
       options: [
         { name: "Ao Leite", price: 2.00 },
         { name: "Branco", price: 2.50 },

@@ -24,18 +24,17 @@ const Cart: React.FC<CartProps> = ({
   handleRemoveFromCart,
   clearCart,
 }) => {
-  const whatsappNumber = '5521991453401'; // Substitua pelo número correto no formato DDI+DDD+Número
-
-  // Função para gerar a mensagem do WhatsApp
+  const whatsappNumber = '5521991453401'; 
+  
   const generateWhatsAppMessage = () => {
-    if (cartItems.length === 0) return '#'; // Evitar mensagens com carrinho vazio
+    if (cartItems.length === 0) return '#';
 
     const productList = cartItems
       .map(
         (item) =>
           `- ${item.name} (${item.option}) x${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}`
       )
-      .join('%0A'); // Quebra de linha no WhatsApp
+      .join('%0A');
 
     const total = cartItems
       .reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -44,7 +43,7 @@ const Cart: React.FC<CartProps> = ({
     return `https://wa.me/${whatsappNumber}?text=Olá! Gostaria de comprar:%0A${productList}%0A%0ATotal: R$ ${total}`;
   };
 
-  // Calcula o total da compra
+  
   const totalPrice = cartItems
     .reduce((sum, item) => sum + item.price * item.quantity, 0)
     .toFixed(2);
@@ -52,7 +51,7 @@ const Cart: React.FC<CartProps> = ({
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="relative bg-white p-6 rounded-lg shadow-lg w-3/4 md:w-1/2">
-        {/* Botão de Fechar */}
+        =
         <button
           onClick={() => setIsCartVisible(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
@@ -60,7 +59,7 @@ const Cart: React.FC<CartProps> = ({
           ✖
         </button>
 
-        {/* Título */}
+       =
         <h2 className="text-xl font-bold mb-4">Carrinho</h2>
 
         {cartItems.length === 0 ? (
@@ -98,7 +97,7 @@ const Cart: React.FC<CartProps> = ({
           </ul>
         )}
 
-        {/* Total e Botões */}
+   
         <div className="mt-4">
           <p className="font-bold text-lg">Total: R$ {totalPrice}</p>
           <div className="mt-4 flex flex-col gap-2">
