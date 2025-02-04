@@ -6,6 +6,7 @@ import ProductOptions from '@/components/ProductOptions';
 import Cart from '@/components/Cart';
 
 
+
 type ProductOption = {
   name: string;
   price: number;
@@ -111,9 +112,8 @@ const App: React.FC = () => {
           cartItems={cartItems}
           setCartItems={setCartItems}
           setIsCartVisible={setIsCartVisible}
-          handleRemoveFromCart={handleRemoveFromCart} 
-          clearCart={clearCart} 
-        />
+          handleRemoveFromCart={handleRemoveFromCart}
+          clearCart={clearCart} cartCount={0}        />
       )}
     </div>
   );
