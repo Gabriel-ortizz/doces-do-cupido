@@ -1,19 +1,33 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import ProductCard from '@/components/ProductCard';
 import ProductOptions from '@/components/ProductOptions';
 import Cart from '@/components/Cart';
 
+
+type ProductOption = {
+  name: string;
+  price: number;
+};
+
 type Product = {
   name: string;
   image: string;
-  options: { name: string; price: number }[];
+  options: ProductOption[];
+};
+
+type CartItem = {
+  name: string;
+  image: string;
+  quantity: number;
+  option: string;
+  price: number;
 };
 
 const App: React.FC = () => {
-  const [cartCount, setCartCount] = useState<number>(0);
-  const [cartItems, setCartItems] = useState<any[]>([]);
-  const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartVisible, setIsCartVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -44,25 +58,23 @@ const App: React.FC = () => {
 
   const handleAddToCart = (product: string, option: string, price: number, quantity: number) => {
     setCartItems([...cartItems, { name: product, image: `/img/${product}.jpg`, quantity, option, price }]);
-    setCartCount(cartCount + quantity);
   };
 
   const handleRemoveFromCart = (index: number) => {
     const updatedCart = cartItems.filter((_, i) => i !== index);
     setCartItems(updatedCart);
-    setCartCount(cartItems.reduce((count, item) => count + item.quantity, 0));
   };
 
-  
   const clearCart = () => {
-    setCartItems([]); 
-    setCartCount(0);   
+    setCartItems([]);
   };
+
+  const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
     <div className="bg-pink-50 min-h-screen text-center p-6">
       <header className="fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-pink-200 shadow-md z-50">
-        <img src="/img/Logo.jpg" alt="Logo" className="w-16" />
+        <Image src="/img/Logo.jpg" alt="Logo" width={64} height={64} />
         <input
           type="text"
           placeholder="Pesquise por produtos..."
@@ -97,7 +109,6 @@ const App: React.FC = () => {
       {isCartVisible && (
         <Cart 
           cartItems={cartItems}
-          cartCount={cartCount}
           setCartItems={setCartItems}
           setIsCartVisible={setIsCartVisible}
           handleRemoveFromCart={handleRemoveFromCart} 
