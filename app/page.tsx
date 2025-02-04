@@ -28,8 +28,8 @@ const App: React.FC = () => {
 
   const products: Product[] = [
     { 
-      name: "Trufa de Brigadeiro", 
-      image: "/img/TrufaDeBrigadeiro.jpg", 
+      name: "Barra de Chocolate", 
+      image: "/img/Trufa De Brigadeiro.jpg", 
       options: [
         { name: "Ao Leite", price: 2.00 },
         { name: "Branco", price: 2.50 },
@@ -38,7 +38,7 @@ const App: React.FC = () => {
     },
     { 
       name: "Trufa de Limão", 
-      image: "/img/TrufaDeLimao.jpg", 
+      image: "/img/Trufa De Limão.jpg", 
       options: [
         { name: "Ao Leite", price: 2.00 },
         { name: "Branco", price: 2.50 },
