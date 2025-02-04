@@ -28,8 +28,8 @@ const App: React.FC = () => {
 
   const products: Product[] = [
     { 
-      name: "Trufa De Brigadeiro", 
-      image: "/img/Trufa De Brigadeiro.jpg", 
+      name: "Trufa de Brigadeiro", 
+      image: "/img/Trufa De Brigadeiro.jpg",  // Certifique-se de que as imagens estão na pasta 'public/img/'
       options: [
         { name: "Ao Leite", price: 2.00 },
         { name: "Branco", price: 2.50 },
@@ -38,7 +38,7 @@ const App: React.FC = () => {
     },
     { 
       name: "Trufa de Limão", 
-      image: "/img/Trufa De Limão.jpg", 
+      image: "/img/Trufa De Limão.jpg",  // Certifique-se de que as imagens estão na pasta 'public/img/'
       options: [
         { name: "Ao Leite", price: 2.00 },
         { name: "Branco", price: 2.50 },
@@ -52,7 +52,7 @@ const App: React.FC = () => {
     setCartCount(cartCount + 1);
     setCartItems([...cartItems, { 
       name: selectedProduct, 
-      image: `/img/${selectedProduct}.jpg`, 
+      image: `/img/${selectedProduct}.jpg`,  // A imagem do produto será vinculada corretamente com base no nome
       quantity: quantity, 
       option: selectedOption, 
       price: selectedOptionPrice 
@@ -195,29 +195,29 @@ const App: React.FC = () => {
                 .find((prod) => prod.name === selectedProduct)?.options
                 .map((option, idx) => (
                   <option key={idx} value={option.name}>{option.name} - R${option.price.toFixed(2)}</option>
-              ))}
+                ))}
             </select>
           </div>
 
-          <div className="mb-4 flex items-center justify-between">
-            <span className="text-lg">Quantidade:</span>
+          <div className="flex items-center justify-between mb-4">
+            <label className="text-lg text-gray-700">Quantidade:</label>
             <div className="flex items-center space-x-2">
-              <button onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)} className="text-gray-600">-</button>
+              <button onClick={() => setQuantity(quantity - 1)} className="bg-gray-200 p-2 rounded-full">-</button>
               <span>{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)} className="text-gray-600">+</button>
+              <button onClick={() => setQuantity(quantity + 1)} className="bg-gray-200 p-2 rounded-full">+</button>
             </div>
           </div>
 
-          <div className="flex justify-between mt-4">
-            <button onClick={() => setSelectedProduct(null)} className="bg-gray-500 text-white p-3 rounded-lg">Cancelar</button>
-            <button onClick={addToCart} className="bg-pink-500 text-white p-3 rounded-lg">Adicionar ao Carrinho</button>
+          <div className="flex justify-between">
+            <button onClick={() => setSelectedProduct(null)} className="bg-red-500 text-white p-3 rounded-lg">Cancelar</button>
+            <button onClick={addToCart} className="bg-pink-500 text-white p-3 rounded-lg">Adicionar</button>
           </div>
         </div>
       )}
 
       {isCartVisible && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg w-96 max-h-80 overflow-y-auto rounded-lg">
-          <button onClick={toggleCart} className="absolute top-2 right-2 text-2xl text-gray-500">❌</button>
+          <button onClick={toggleCart} className="absolute top-2 right-2 text-2xl text-gray-600">❌</button>
           <h2 className="text-2xl mb-4 text-gray-800">Carrinho de Compras</h2>
           <ul className="space-y-4">
             {updateCartView()}
