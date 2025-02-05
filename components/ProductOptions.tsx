@@ -24,7 +24,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white p-6 rounded-2xl shadow-xl w-11/12 max-w-md text-center relative">
-        {/* Botão de Fechar */}
+       
         <button
           onClick={() => setSelectedProduct(null)}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -35,7 +35,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{product}</h2>
         <p className="text-gray-600 mb-2">Escolha uma opção:</p>
 
-        {/* Opções de Produto */}
+        
         <div className="flex flex-wrap justify-center gap-3 mb-4">
           {options.map((option, idx) => (
             <button
@@ -52,7 +52,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
           ))}
         </div>
 
-        {/* Seletor de Quantidade */}
+        
         <div className="flex items-center justify-center gap-4 mb-4">
           <button
             onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -69,7 +69,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
           </button>
         </div>
 
-        {/* Botão de Adicionar ao Carrinho */}
+      
         <div className="flex justify-center mt-4">
           <button
             onClick={() => {

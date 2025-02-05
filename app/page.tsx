@@ -56,14 +56,14 @@ const App: React.FC = () => {
   ];
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const handleAddToCart = (
     product: string,
     option: string,
     price: number,
-    quantity: number
+    quantity: number,
   ) => {
     const formattedProductName = product.replace(/\s+/g, '%20');
     setCartItems((prevCartItems) => [
@@ -94,7 +94,7 @@ const App: React.FC = () => {
           <ProductCard
             key={idx}
             product={product}
-            onSelect={(name) => setSelectedProduct(name)}
+            onSelect={() => setSelectedProduct(product.name)}
           />
         ))}
       </main>
@@ -103,7 +103,8 @@ const App: React.FC = () => {
         <ProductOptions
           product={selectedProduct}
           options={
-            products.find((prod) => prod.name === selectedProduct)?.options || []
+            products.find((prod) => prod.name === selectedProduct)?.options ||
+            []
           }
           onAddToCart={handleAddToCart}
           setSelectedProduct={setSelectedProduct}
