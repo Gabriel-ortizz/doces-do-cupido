@@ -64,8 +64,8 @@ const Cart: React.FC<CartProps> = ({ cartItems, setCartItems, setIsCartVisible }
     .toFixed(2);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="relative bg-white p-4 rounded-lg shadow-lg w-3/4 md:w-1/3 transition-transform transform hover:scale-105">
+    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+      <div className="relative bg-white p-4 rounded-lg shadow-lg w-full max-w-md md:max-w-lg lg:max-w-xl transition-transform transform hover:scale-105">
         <button
           onClick={() => setIsCartVisible(false)}
           className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 transition-colors"
@@ -117,10 +117,10 @@ const Cart: React.FC<CartProps> = ({ cartItems, setCartItems, setIsCartVisible }
 
         <div className="mt-4">
           <p className="font-bold text-xl text-gray-800">Total: R$ {totalPrice}</p>
-          <div className="mt-4 flex justify-between">
+          <div className="mt-4 flex flex-col md:flex-row justify-between gap-2">
             <button
               onClick={clearCart}
-              className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+              className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors w-full md:w-auto"
             >
               Limpar Carrinho
             </button>
@@ -129,7 +129,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, setCartItems, setIsCartVisible }
                 href={generateWhatsAppMessage()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors w-full md:w-auto text-center"
               >
                 Comprar no WhatsApp
               </a>
