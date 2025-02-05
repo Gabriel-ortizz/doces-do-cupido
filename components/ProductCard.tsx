@@ -1,33 +1,37 @@
-import Image from 'next/image';
+// components/ProductCard.tsx
 import React from 'react';
 
-type Product = {
+interface ProductOption {
+  name: string;
+  price: number;
+}
+
+interface Product {
   name: string;
   image: string;
-  options: { name: string; price: number }[];
-};
+  options: ProductOption[];
+}
 
-type ProductCardProps = {
+interface ProductCardProps {
   product: Product;
   onSelect: (name: string) => void;
-};
+}
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) => {
   return (
-    <div
-      className="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md hover:scale-105 transition-all duration-200"
-      onClick={() => onSelect(product.name)}
-    >
-      <Image
-        width={192}
-        height={192}
+    <div className="border p-4 rounded-md shadow-md hover:shadow-lg transition-all">
+      <img
         src={product.image}
-        alt={`Imagem de ${product.name}`}
-        className="w-full h-48 object-cover"
+        alt={product.name}
+        className="w-full h-48 object-cover rounded-md mb-4"
       />
-      <div className="p-4">
-        <p className="text-lg font-semibold text-gray-700">{product.name}</p>
-      </div>
+      <h3 className="font-semibold text-lg">{product.name}</h3>
+      <button
+        onClick={() => onSelect(product.name)}
+        className="mt-2 bg-pink-500 text-white py-2 px-4 rounded-md hover:bg-pink-600 transition-colors"
+      >
+        Ver Opções
+      </button>
     </div>
   );
 };
