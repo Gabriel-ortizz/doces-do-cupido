@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 
 interface ProductOption {
@@ -20,8 +19,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) => {
   return (
     <div className="border p-4 rounded-md shadow-md hover:shadow-lg transition-all">
-      <Image height={165}
-      width={165}
+      <img
         src={product.image}
         alt={product.name}
         className="w-full h-48 object-cover rounded-md mb-4"
