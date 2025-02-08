@@ -32,25 +32,25 @@ const App: React.FC = () => {
 
   const products: Product[] = [
     {
-      name: 'Trufa de Brigadeiro',
-      image: '/img/Trufa De Brigadeiro.jpg',
+      name: 'Trufas',
+      image: '/img/Trufas.jpg',
       options: [
         { name: 'Limão', price: 2.0 },
-        { name: 'Morando', price: 2.5 },
+        { name: 'Morango', price: 2.5 },
         { name: 'Brigadeiro', price: 2.8 },
         { name: 'Maracujá', price: 2.8 },
-        { name: 'Beijeinho', price: 2.8 },
+        { name: 'Beijinho', price: 2.8 },
       ],
     },
     {
-      name: 'Trufa de Limão',
-      image: '/img/Trufa De Limão.jpg',
+      name: 'Barras',
+      image: '/img/Barras.webp',
       options: [
         { name: 'Limão', price: 2.0 },
-        { name: 'Morando', price: 2.5 },
+        { name: 'Morango', price: 2.5 },
         { name: 'Brigadeiro', price: 2.8 },
         { name: 'Maracujá', price: 2.8 },
-        { name: 'Beijeinho', price: 2.8 },
+        { name: 'Beijinho', price: 2.8 },
       ],
     },
   ];
@@ -65,12 +65,21 @@ const App: React.FC = () => {
     price: number,
     quantity: number,
   ) => {
-    const formattedProductName = product.replace(/\s+/g, '%20');
+    // Encontra o produto correspondente para obter o caminho correto da imagem
+    const selectedProduct = products.find((p) => p.name === product);
+
+    if (!selectedProduct) {
+      console.error(`Produto não encontrado: ${product}`);
+      return;
+    }
+
+    console.log(`Adicionando ao carrinho: ${selectedProduct.image}`);
+
     setCartItems((prevCartItems) => [
       ...prevCartItems,
       {
         name: product,
-        image: `/img/${formattedProductName}.jpg`,
+        image: selectedProduct.image, // Usando diretamente a imagem do produto
         quantity,
         option,
         price,

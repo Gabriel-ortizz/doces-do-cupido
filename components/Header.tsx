@@ -11,7 +11,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ searchQuery, setSearchQuery, cartCount, setIsCartVisible }) => {
   return (
     <header className="fixed top-0 left-0 w-full flex justify-between items-center p-4 bg-pink-200 shadow-md z-50">
-      <Image src="/img/Logo.jpg" alt="Logo" width={64} height={64} />
+      <Image src="/img/Logo.png" alt="Logo" width={84} height={80} />
       <input
         type="text"
         placeholder="Pesquise por produtos..."
