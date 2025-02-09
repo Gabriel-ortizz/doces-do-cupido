@@ -1,10 +1,12 @@
 'use client';
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import ProductOptions from '@/components/ProductOptions';
 import Cart from '@/components/Cart';
 import AdminDashboard from '@/components/admin/AdminDashboard';
+import MaintenancePage from '@/components/MaintenancePage';
 import { Button } from '@/components/ui/button';
 
 type ProductOption = {
@@ -31,7 +33,8 @@ const App: React.FC = () => {
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isAdminView, setIsAdminView] = useState<boolean>(false); // Alterna entre loja e admin
+  const [isAdminView, setIsAdminView] = useState<boolean>(false); 
+  const isUnderMaintenance = false; // Alterar para true para ativar a manutenção
 
   const products: Product[] = [
     {
@@ -92,58 +95,67 @@ const App: React.FC = () => {
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <div className="bg-pink-50 min-h-screen text-center p-6">
-      <Header
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        cartCount={cartCount}
-        setIsCartVisible={setIsCartVisible}
-      />
-
-      {/* Botão para alternar entre Loja e Admin */}
-      <div className="flex justify-center my-4">
-        <Button onClick={() => setIsAdminView(!isAdminView)}>
-          {isAdminView ? "Voltar para Loja" : "Painel Administrativo"}
-        </Button>
-      </div>
-
-      {/* Renderiza Loja ou Painel Administrativo */}
-      {isAdminView ? (
-        <AdminDashboard />
+    <Router>
+      {isUnderMaintenance ? (
+        <Routes>
+          <Route path="*" element={<Navigate to="/maintenance" replace />} />
+          <Route path="/maintenance" element={<MaintenancePage />} />
+        </Routes>
       ) : (
-        <>
-          <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-            {filteredProducts.map((product, idx) => (
-              <ProductCard
-                key={idx}
-                product={product}
-                onSelect={() => setSelectedProduct(product.name)}
-              />
-            ))}
-          </main>
+        <div className="bg-pink-50 min-h-screen text-center p-6">
+          <Header
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            cartCount={cartCount}
+            setIsCartVisible={setIsCartVisible}
+          />
 
-          {selectedProduct && (
-            <ProductOptions
-              product={selectedProduct}
-              options={
-                products.find((prod) => prod.name === selectedProduct)?.options ||
-                []
-              }
-              onAddToCart={handleAddToCart}
-              setSelectedProduct={setSelectedProduct}
-            />
-          )}
+          
+          <div className="flex justify-center my-4">
+            <Button onClick={() => setIsAdminView(!isAdminView)}>
+              {isAdminView ? "Voltar para Loja" : "Painel Administrativo"}
+            </Button>
+          </div>
 
-          {isCartVisible && (
-            <Cart
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              setIsCartVisible={setIsCartVisible}
-            />
+         
+          {isAdminView ? (
+            <AdminDashboard />
+          ) : (
+            <>
+              <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+                {filteredProducts.map((product, idx) => (
+                  <ProductCard
+                    key={idx}
+                    product={product}
+                    onSelect={() => setSelectedProduct(product.name)}
+                  />
+                ))}
+              </main>
+
+              {selectedProduct && (
+                <ProductOptions
+                  product={selectedProduct}
+                  options={
+                    products.find((prod) => prod.name === selectedProduct)?.options ||
+                    []
+                  }
+                  onAddToCart={handleAddToCart}
+                  setSelectedProduct={setSelectedProduct}
+                />
+              )}
+
+              {isCartVisible && (
+                <Cart
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  setIsCartVisible={setIsCartVisible}
+                />
+              )}
+            </>
           )}
-        </>
+        </div>
       )}
-    </div>
+    </Router>
   );
 };
 
