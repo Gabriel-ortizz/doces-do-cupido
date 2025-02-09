@@ -37,21 +37,17 @@ const Cart: React.FC<CartProps> = ({ cartItems, setCartItems, setIsCartVisible }
 
   const handleRemoveFromCart = (index: number) => {
     setCartItems((prevItems) => {
-      const updatedItems = [...prevItems];
-      if (updatedItems[index].quantity > 1) {
-        updatedItems[index].quantity -= 1;
-      } else {
-        updatedItems.splice(index, 1);
-      }
-      return updatedItems;
+      return prevItems.map((item, i) =>
+        i === index ? { ...item, quantity: Math.max(1, item.quantity - 1) } : item
+      ).filter(item => item.quantity > 0);
     });
   };
 
   const handleIncreaseQuantity = (index: number) => {
     setCartItems((prevItems) => {
-      const updatedItems = [...prevItems];
-      updatedItems[index].quantity += 1;
-      return updatedItems;
+      return prevItems.map((item, i) =>
+        i === index ? { ...item, quantity: item.quantity + 1 } : item
+      );
     });
   };
 
@@ -78,7 +74,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, setCartItems, setIsCartVisible }
         {cartItems.length === 0 ? (
           <p className="text-gray-500 text-center">Seu carrinho está vazio.</p>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-300 scrollbar-thumb-rounded-md scrollbar-track-rounded-md">
             {cartItems.map((item, idx) => (
               <li key={idx} className="flex items-center border-b pb-4">
                 <Image
