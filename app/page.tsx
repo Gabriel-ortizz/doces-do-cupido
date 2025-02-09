@@ -4,6 +4,8 @@ import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import ProductOptions from '@/components/ProductOptions';
 import Cart from '@/components/Cart';
+import AdminDashboard from '@/components/admin/AdminDashboard';
+import { Button } from '@/components/ui/button';
 
 type ProductOption = {
   name: string;
@@ -29,6 +31,7 @@ const App: React.FC = () => {
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isAdminView, setIsAdminView] = useState<boolean>(false); // Alterna entre loja e admin
 
   const products: Product[] = [
     {
@@ -65,7 +68,6 @@ const App: React.FC = () => {
     price: number,
     quantity: number,
   ) => {
-    // Encontra o produto correspondente para obter o caminho correto da imagem
     const selectedProduct = products.find((p) => p.name === product);
 
     if (!selectedProduct) {
@@ -79,7 +81,7 @@ const App: React.FC = () => {
       ...prevCartItems,
       {
         name: product,
-        image: selectedProduct.image, // Usando diretamente a imagem do produto
+        image: selectedProduct.image,
         quantity,
         option,
         price,
@@ -98,34 +100,48 @@ const App: React.FC = () => {
         setIsCartVisible={setIsCartVisible}
       />
 
-      <main className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {filteredProducts.map((product, idx) => (
-          <ProductCard
-            key={idx}
-            product={product}
-            onSelect={() => setSelectedProduct(product.name)}
-          />
-        ))}
-      </main>
+      {/* Botão para alternar entre Loja e Admin */}
+      <div className="flex justify-center my-4">
+        <Button onClick={() => setIsAdminView(!isAdminView)}>
+          {isAdminView ? "Voltar para Loja" : "Painel Administrativo"}
+        </Button>
+      </div>
 
-      {selectedProduct && (
-        <ProductOptions
-          product={selectedProduct}
-          options={
-            products.find((prod) => prod.name === selectedProduct)?.options ||
-            []
-          }
-          onAddToCart={handleAddToCart}
-          setSelectedProduct={setSelectedProduct}
-        />
-      )}
+      {/* Renderiza Loja ou Painel Administrativo */}
+      {isAdminView ? (
+        <AdminDashboard />
+      ) : (
+        <>
+          <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+            {filteredProducts.map((product, idx) => (
+              <ProductCard
+                key={idx}
+                product={product}
+                onSelect={() => setSelectedProduct(product.name)}
+              />
+            ))}
+          </main>
 
-      {isCartVisible && (
-        <Cart
-          cartItems={cartItems}
-          setCartItems={setCartItems}
-          setIsCartVisible={setIsCartVisible}
-        />
+          {selectedProduct && (
+            <ProductOptions
+              product={selectedProduct}
+              options={
+                products.find((prod) => prod.name === selectedProduct)?.options ||
+                []
+              }
+              onAddToCart={handleAddToCart}
+              setSelectedProduct={setSelectedProduct}
+            />
+          )}
+
+          {isCartVisible && (
+            <Cart
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              setIsCartVisible={setIsCartVisible}
+            />
+          )}
+        </>
       )}
     </div>
   );
