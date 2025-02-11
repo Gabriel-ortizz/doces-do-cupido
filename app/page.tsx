@@ -1,11 +1,12 @@
-'use client';
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Header from '@/components/Header';
-import ProductCard from '@/components/ProductCard';
-import ProductOptions from '@/components/ProductOptions';
-import Cart from '@/components/Cart';
-import MaintenancePage from '@/components/MaintenancePage';
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import ProductCard from "@/components/ProductCard";
+import ProductOptions from "@/components/ProductOptions";
+import Cart from "@/components/Cart";
+import MaintenancePage from "@/components/MaintenancePage";
 
 type ProductOption = {
   name: string;
@@ -29,31 +30,45 @@ type CartItem = {
 const App: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
+  
   const isUnderMaintenance = false; // Alterar para true para ativar a manutenção
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
+  if (isUnderMaintenance) {
+    router.push("/maintenance");
+    return <MaintenancePage />;
+  }
 
   const products: Product[] = [
     {
-      name: 'Trufas',
-      image: '/img/Trufas.jpg',
+      name: "Trufas",
+      image: "/img/Trufas.jpg",
       options: [
-        { name: 'Limão', price: 4.5 },
-        { name: 'Morango', price: 4.5 },
-        { name: 'Brigadeiro', price: 4.5 },
-        { name: 'Maracujá', price: 4.5 },
-        { name: 'Beijinho', price: 4.5 },
+        { name: "Limão", price: 4.5 },
+        { name: "Morango", price: 4.5 },
+        { name: "Brigadeiro", price: 4.5 },
+        { name: "Maracujá", price: 4.5 },
+        { name: "Beijinho", price: 4.5 },
       ],
     },
     {
-      name: 'Barras',
-      image: '/img/Barras.webp',
+      name: "Barras",
+      image: "/img/Barras.webp",
       options: [
-        { name: 'Limão', price: 12.0 },
-        { name: 'Morango', price: 12.0 },
-        { name: 'Brigadeiro', price: 12.0 },
-        { name: 'Maracujá', price: 12.0 },
-        { name: 'Beijinho', price: 12.0 },
+        { name: "Limão", price: 12.0 },
+        { name: "Morango", price: 12.0 },
+        { name: "Brigadeiro", price: 12.0 },
+        { name: "Maracujá", price: 12.0 },
+        { name: "Beijinho", price: 12.0 },
       ],
     },
   ];
@@ -75,50 +90,33 @@ const App: React.FC = () => {
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <Router>
-      {isUnderMaintenance ? (
-        <Routes>
-          <Route path="*" element={<Navigate to="/maintenance" replace />} />
-          <Route path="/maintenance" element={<MaintenancePage />} />
-        </Routes>
-      ) : (
-        <div className="bg-pink-50 min-h-screen text-center p-6">
-          <Header
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            cartCount={cartCount}
-            setIsCartVisible={setIsCartVisible}
-          />
+    <div className="bg-pink-50 min-h-screen text-center p-6">
+      <Header
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        cartCount={cartCount}
+        setIsCartVisible={setIsCartVisible}
+      />
 
-          <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.name}
-                product={product}
-                onSelect={() => setSelectedProduct(product.name)}
-              />
-            ))}
-          </main>
+      <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
+        ))}
+      </main>
 
-          {selectedProduct && (
-            <ProductOptions
-              product={selectedProduct}
-              options={products.find((prod) => prod.name === selectedProduct)?.options || []}
-              onAddToCart={handleAddToCart}
-              setSelectedProduct={setSelectedProduct}
-            />
-          )}
-
-          {isCartVisible && (
-            <Cart
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              setIsCartVisible={setIsCartVisible}
-            />
-          )}
-        </div>
+      {selectedProduct && (
+        <ProductOptions
+          product={selectedProduct.name}
+          options={selectedProduct.options}
+          onAddToCart={handleAddToCart}
+          setSelectedProduct={() => setSelectedProduct(null)}
+        />
       )}
-    </Router>
+
+      {isCartVisible && (
+        <Cart cartItems={cartItems} setCartItems={setCartItems} setIsCartVisible={setIsCartVisible} />
+      )}
+    </div>
   );
 };
 
