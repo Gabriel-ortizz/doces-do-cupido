@@ -4,8 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Image from 'next/image';
 
 const MaintenancePage: React.FC = () => {
-  const navigate = useNavigate();
-
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-pink-200 to-pink-400 text-white p-6">
       <motion.div
