@@ -5,9 +5,7 @@ import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import ProductOptions from '@/components/ProductOptions';
 import Cart from '@/components/Cart';
-import AdminDashboard from '@/components/admin/AdminDashboard';
 import MaintenancePage from '@/components/MaintenancePage';
-import { Button } from '@/components/ui/button';
 
 type ProductOption = {
   name: string;
@@ -33,7 +31,6 @@ const App: React.FC = () => {
   const [isCartVisible, setIsCartVisible] = useState<boolean>(false);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [isAdminView, setIsAdminView] = useState<boolean>(false); 
   const isUnderMaintenance = false; // Alterar para true para ativar a manutenção
 
   const products: Product[] = [
@@ -41,54 +38,37 @@ const App: React.FC = () => {
       name: 'Trufas',
       image: '/img/Trufas.jpg',
       options: [
-        { name: 'Limão', price: 4.50 },
-        { name: 'Morango', price: 4.50 },
-        { name: 'Brigadeiro', price: 4.50 },
-        { name: 'Maracujá', price: 4.50 },
-        { name: 'Beijinho', price: 4.50 },
+        { name: 'Limão', price: 4.5 },
+        { name: 'Morango', price: 4.5 },
+        { name: 'Brigadeiro', price: 4.5 },
+        { name: 'Maracujá', price: 4.5 },
+        { name: 'Beijinho', price: 4.5 },
       ],
     },
     {
       name: 'Barras',
       image: '/img/Barras.webp',
       options: [
-        { name: 'Limão', price: 12.00 },
-        { name: 'Morango', price: 12.00 },
-        { name: 'Brigadeiro', price: 12.00 },
-        { name: 'Maracujá', price: 12.00 },
-        { name: 'Beijinho', price: 12.00 },
+        { name: 'Limão', price: 12.0 },
+        { name: 'Morango', price: 12.0 },
+        { name: 'Brigadeiro', price: 12.0 },
+        { name: 'Maracujá', price: 12.0 },
+        { name: 'Beijinho', price: 12.0 },
       ],
     },
   ];
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAddToCart = (
-    product: string,
-    option: string,
-    price: number,
-    quantity: number,
-  ) => {
-    const selectedProduct = products.find((p) => p.name === product);
-
-    if (!selectedProduct) {
-      console.error(`Produto não encontrado: ${product}`);
-      return;
-    }
-
-    console.log(`Adicionando ao carrinho: ${selectedProduct.image}`);
+  const handleAddToCart = (productName: string, option: string, price: number, quantity: number) => {
+    const selectedProduct = products.find((p) => p.name === productName);
+    if (!selectedProduct) return;
 
     setCartItems((prevCartItems) => [
       ...prevCartItems,
-      {
-        name: product,
-        image: selectedProduct.image,
-        quantity,
-        option,
-        price,
-      },
+      { name: productName, image: selectedProduct.image, quantity, option, price },
     ]);
   };
 
@@ -110,48 +90,31 @@ const App: React.FC = () => {
             setIsCartVisible={setIsCartVisible}
           />
 
-          
-          <div className="flex justify-center my-4">
-            <Button onClick={() => setIsAdminView(!isAdminView)}>
-              {isAdminView ? "Voltar para Loja" : "Painel Administrativo"}
-            </Button>
-          </div>
+          <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.name}
+                product={product}
+                onSelect={() => setSelectedProduct(product.name)}
+              />
+            ))}
+          </main>
 
-         
-          {isAdminView ? (
-            <AdminDashboard />
-          ) : (
-            <>
-              <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-                {filteredProducts.map((product, idx) => (
-                  <ProductCard
-                    key={idx}
-                    product={product}
-                    onSelect={() => setSelectedProduct(product.name)}
-                  />
-                ))}
-              </main>
+          {selectedProduct && (
+            <ProductOptions
+              product={selectedProduct}
+              options={products.find((prod) => prod.name === selectedProduct)?.options || []}
+              onAddToCart={handleAddToCart}
+              setSelectedProduct={setSelectedProduct}
+            />
+          )}
 
-              {selectedProduct && (
-                <ProductOptions
-                  product={selectedProduct}
-                  options={
-                    products.find((prod) => prod.name === selectedProduct)?.options ||
-                    []
-                  }
-                  onAddToCart={handleAddToCart}
-                  setSelectedProduct={setSelectedProduct}
-                />
-              )}
-
-              {isCartVisible && (
-                <Cart
-                  cartItems={cartItems}
-                  setCartItems={setCartItems}
-                  setIsCartVisible={setIsCartVisible}
-                />
-              )}
-            </>
+          {isCartVisible && (
+            <Cart
+              cartItems={cartItems}
+              setCartItems={setCartItems}
+              setIsCartVisible={setIsCartVisible}
+            />
           )}
         </div>
       )}

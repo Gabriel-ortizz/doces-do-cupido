@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import Image from 'next/image';
 
 const MaintenancePage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const MaintenancePage: React.FC = () => {
           animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
-          <img src="/img/manutençao.png" alt="Manutenção" className="w-4xl mx-auto" />
+          <Image width={465} height={465} src="/img/manutençao.png" alt="Manutenção" className="w-4xl mx-auto" />
         </motion.div>
       </motion.div>
     </div>
