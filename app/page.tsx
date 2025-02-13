@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import ProductOptions from "@/components/ProductOptions";
 import Cart from "@/components/Cart";
-import MaintenancePage from "@/components/MaintenancePage"; // Corrigido: deve estar em components/
+import MaintenancePage from "@/components/MaintenancePage";
 
 type ProductOption = {
   name: string;
@@ -34,7 +34,7 @@ const App: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   
   
-  const isUnderMaintenance = true; // Defina como true para ativar a manutenção
+  const isUnderMaintenance = false; // Defina como true para ativar a manutenção
 
   useEffect(() => {
     setIsClient(true);
@@ -63,12 +63,40 @@ const App: React.FC = () => {
       name: "Barras",
       image: "/img/Barras.webp",
       options: [
-        { name: "Limão", price: 12.0 },
-        { name: "Morango", price: 12.0 },
-        { name: "Brigadeiro", price: 12.0 },
-        { name: "Maracujá", price: 12.0 },
-        { name: "Beijinho", price: 12.0 },
+        { name: "Limão", price: 18.0 },
+        { name: "Morango", price: 18.0 },
+        { name: "Brigadeiro", price: 18.0 },
+        { name: "Maracujá", price: 18.0 },
+        { name: "Beijinho", price: 18.0 },
+        
       ],
+     
+    },
+    {
+      name: "Corações",
+      image: "/img/coraçao_de_chocolate.jpg",
+      options: [
+        { name: "Limão", price: 15.50 },
+        { name: "Morango", price: 15.50 },
+        { name: "Brigadeiro", price: 15.50 },
+        { name: "Maracujá", price: 15.50 },
+        { name: "Beijinho", price: 15.50 },
+        
+      ],
+     
+    },
+    {
+      name: "Cones Recheado",
+      image: "/img/cone.jpg",
+      options: [
+        { name: "Limão", price: 12.00 },
+        { name: "Morango", price: 12.00 },
+        { name: "Brigadeiro", price: 12.00 },
+        { name: "Maracujá", price: 12.00 },
+        { name: "Beijinho", price: 12.00 },
+        
+      ],
+     
     },
   ];
 
