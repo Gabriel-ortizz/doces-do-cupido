@@ -33,7 +33,7 @@ const App: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
-  const router = useRouter();
+  
   
   const isUnderMaintenance = true; // Defina como true para ativar a manutenção
 

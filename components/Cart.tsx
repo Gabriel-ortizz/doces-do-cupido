@@ -45,7 +45,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       const state = data.uf;
       const cost = state === 'RJ' ? 5 : 10;
       setShippingCost(cost);
-    } catch (err) {
+    } catch {
       setError('Erro ao buscar o CEP.');
     } finally {
       setLoading(false);
