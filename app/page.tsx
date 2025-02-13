@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import ProductOptions from "@/components/ProductOptions";
 import Cart from "@/components/Cart";
-import MaintenancePage from "@/components/MaintenancePage";
+import MaintenancePage from "@/components/MaintenancePage"; // Corrigido: deve estar em components/
 
 type ProductOption = {
   name: string;
@@ -35,7 +35,7 @@ const App: React.FC = () => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   
-  const isUnderMaintenance = false; // Alterar para true para ativar a manutenção
+  const isUnderMaintenance = true; // Defina como true para ativar a manutenção
 
   useEffect(() => {
     setIsClient(true);
@@ -43,8 +43,8 @@ const App: React.FC = () => {
 
   if (!isClient) return null;
 
+  
   if (isUnderMaintenance) {
-    router.push("/maintenance");
     return <MaintenancePage />;
   }
 
@@ -98,7 +98,7 @@ const App: React.FC = () => {
         setIsCartVisible={setIsCartVisible}
       />
 
-      <main className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+      <main className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
         {filteredProducts.map((product) => (
           <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
         ))}
