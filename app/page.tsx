@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import ProductOptions from "@/components/ProductOptions";
