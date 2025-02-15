@@ -16,9 +16,6 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
-  const [cep, setCep] = useState('');
-  const [shippingCost, setShippingCost] = useState<number | null>(null);
-
   const handleQuantityChange = (index: number, newQuantity: number) => {
     if (newQuantity < 1) return;
     const updatedCart = [...cartItems];
@@ -63,7 +60,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const finalTotal = (totalPrice + (shippingCost || 0)).toFixed(2);
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
@@ -104,7 +100,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
         <div className="w-full md:w-1/3">
           <h3 className="font-bold">Resumo do pedido</h3>
-          <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
+          <p className="font-bold text-xl text-center mt-4">Total: R$ {totalPrice.toFixed(2)}</p>
 
           <button onClick={handleCheckout} className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg">
             Pagar com Mercado Pago 💳
