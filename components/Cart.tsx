@@ -18,37 +18,6 @@ interface CartProps {
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
   const [cep, setCep] = useState('');
   const [shippingCost, setShippingCost] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [deliveryMethod, setDeliveryMethod] = useState<'retirada' | 'entrega' | null>(null);
-
-  const fetchShippingCost = async () => {
-    if (cep.length !== 8) {
-      setError('Digite um CEP válido (8 dígitos).');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      const data = await response.json();
-
-      if (data.erro) {
-        setError('CEP inválido. Tente novamente.');
-        return;
-      }
-
-      const state = data.uf;
-      const cost = state === 'RJ' ? 5 : 10;
-      setShippingCost(cost);
-    } catch {
-      setError('Erro ao buscar o CEP.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleQuantityChange = (index: number, newQuantity: number) => {
     if (newQuantity < 1) return;
