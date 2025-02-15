@@ -72,12 +72,18 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: cartItems }),
+        body: JSON.stringify({
+          items: cartItems.map(item => ({
+            title: item.name,
+            quantity: item.quantity,
+            unit_price: item.price,
+          })),
+        }),
       });
 
       const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
+      if (data.init_point) {
+        window.location.href = data.init_point;
       } else {
         alert("Erro ao redirecionar para o pagamento.");
       }
@@ -132,7 +138,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
           <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
 
           <button onClick={handleCheckout} className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg">
-            Pagar com Cartão 💳
+            Pagar com Mercado Pago 💳
           </button>
         </div>
       </div>
