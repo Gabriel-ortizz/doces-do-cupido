@@ -7,6 +7,7 @@ import ProductOptions from "@/components/ProductOptions";
 import Cart from "@/components/Cart";
 import MaintenancePage from "@/components/MaintenancePage";
 
+
 type ProductOption = {
   name: string;
   price: number;
@@ -52,7 +53,7 @@ const App: React.FC = () => {
       name: "Trufas",
       image: "/img/Trufas.jpg",
       options: [
-        { name: "Limão", price: 4.5 },
+        { name: "Limão", price: 1.0 },
         { name: "Morango", price: 4.5 },
         { name: "Brigadeiro", price: 4.5 },
         { name: "Maracujá", price: 4.5 },
@@ -73,14 +74,14 @@ const App: React.FC = () => {
      
     },
     {
-      name: "Corações",
+      name: "Coração",
       image: "/img/coraçao_de_chocolate.jpg",
       options: [
-        { name: "Limão", price: 15.50 },
-        { name: "Morango", price: 15.50 },
-        { name: "Brigadeiro", price: 15.50 },
-        { name: "Maracujá", price: 15.50 },
-        { name: "Beijinho", price: 15.50 },
+        { name: "Limão", price: 6.50 },
+        { name: "Morango", price: 6.50 },
+        { name: "Brigadeiro", price: 6.50 },
+        { name: "Maracujá", price: 6.50 },
+        { name: "Beijinho", price: 6.50 },
         
       ],
      
@@ -125,11 +126,17 @@ const App: React.FC = () => {
         setIsCartVisible={setIsCartVisible}
       />
 
+      
+
       <main className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+        
         {filteredProducts.map((product) => (
           <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
         ))}
+        
       </main>
+
+
 
       {selectedProduct && (
         <ProductOptions
@@ -139,6 +146,7 @@ const App: React.FC = () => {
           setSelectedProduct={() => setSelectedProduct(null)}
         />
       )}
+      
 
       {isCartVisible && (
         <Cart cartItems={cartItems} setCartItems={setCartItems} setIsCartVisible={setIsCartVisible} />
