@@ -5,14 +5,14 @@ interface HeaderProps {
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   cartCount: number;
-  setIsCartVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  onCartClick: () => void; // ✅ Atualizado para lidar com a navegação
 }
 
 const Header: React.FC<HeaderProps> = ({
   searchQuery,
   setSearchQuery,
   cartCount,
-  setIsCartVisible,
+  onCartClick,
 }) => {
   return (
     <header className="fixed top-0 left-0 w-full p-4 bg-pink-200 shadow-md z-50">
@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = ({
         />
         <div className="flex items-center gap-4">
           <div
-            onClick={() => setIsCartVisible(true)}
+            onClick={onCartClick} // ✅ Atualizado para chamar a função de navegação
             className="cursor-pointer p-3 rounded-lg hover:bg-pink-300 transition-all duration-200 flex items-center"
           >
             🛒 <span className="ml-1">{cartCount}</span>
