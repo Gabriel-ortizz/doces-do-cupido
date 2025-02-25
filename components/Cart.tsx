@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import CheckoutButton from '../components/CheckoutButton'; // Certifique-se do caminho correto
 
 interface CartItem {
   name: string;
@@ -172,6 +173,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
         <div className="w-full md:w-1/3 overflow-y-auto max-h-[70vh]">
           <h3 className="font-bold">Resumo do pedido</h3>
           <div className="mt-4">
+           
             <label className="block text-sm text-gray-700">Forma de pagamento:</label>
             <label className="flex items-center gap-2 mt-2">
               <input type="radio" name="payment" value="cartao" onChange={() => setPaymentMethod('cartao')} /> Cartão
@@ -228,6 +230,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             >
               Comprar no WhatsApp
             </button>
+            <CheckoutButton amount={amount} description={description} customer={customer} />
           </div>
         </div>
       </div>
