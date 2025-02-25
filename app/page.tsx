@@ -84,11 +84,12 @@ const App: React.FC = () => {
       name: "Coração",
       image: "/img/coraçao_de_chocolate.jpg",
       options: [
-        { name: "Limão", price: 6.5 },
-        { name: "Morango", price: 6.5 },
-        { name: "Brigadeiro", price: 6.5 },
-        { name: "Maracujá", price: 6.5 },
-        { name: "Beijinho", price: 6.5 },
+        { name: "Limão", price: 6.50 },
+        { name: "Morango", price: 6.50 },
+        { name: "Brigadeiro", price: 6.50 },
+        { name: "Maracujá", price: 6.50 },
+        { name: "Beijinho", price: 6.50 },
+        
       ],
     },
     {
