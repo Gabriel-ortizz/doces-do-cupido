@@ -31,7 +31,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const freeShippingThreshold = 50;
   const discountForFreeShipping = 'FRETEGRATIS10';
   const autoDiscountValue = 0.1;
-  const freeShippingMessage = 'Você ganhou Frete Grátis em sua compra!';
+  
 
   const fetchShippingCost = async () => {
     if (freeShippingUnlocked) {
@@ -79,20 +79,12 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
     setCartItems(updatedCart);
   };
 
-  const applyDiscount = () => {
-    if (discountCode === 'PROMO10' || (freeShippingUnlocked && discountCode === discountForFreeShipping)) {
-      setDiscountValue(autoDiscountValue);
-      setError('');
-    } else {
-      setDiscountValue(0);
-      setError('Cupom inválido.');
-    }
-  };
+
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const discountAmount = totalPrice * discountValue;
   const finalTotal = (totalPrice - discountAmount + (shippingCost || 0)).toFixed(2);
-  const earnedCashback = Math.floor(Number(finalTotal) / 10);
+  
   const progressPercentage = Math.min((totalPrice / freeShippingThreshold) * 100, 100);
 
   useEffect(() => {
@@ -130,7 +122,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
     const paymentText = paymentMethod ? `Forma de Pagamento: ${paymentMethod}` : 'Forma de Pagamento: Não informada';
 
-    const freeShippingText = freeShippingUnlocked ? `%0A${freeShippingMessage}` : '';
 
     return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${discountCode || 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
   };
