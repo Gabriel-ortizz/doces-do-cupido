@@ -31,7 +31,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const freeShippingThreshold = 50;
   const discountForFreeShipping = 'FRETEGRATIS10';
   const autoDiscountValue = 0.1;
-  
 
   const fetchShippingCost = async () => {
     if (freeShippingUnlocked) {
@@ -79,12 +78,10 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
     setCartItems(updatedCart);
   };
 
-
-
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const discountAmount = totalPrice * discountValue;
   const finalTotal = (totalPrice - discountAmount + (shippingCost || 0)).toFixed(2);
-  
+
   const progressPercentage = Math.min((totalPrice / freeShippingThreshold) * 100, 100);
 
   useEffect(() => {
@@ -122,16 +119,15 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
     const paymentText = paymentMethod ? `Forma de Pagamento: ${paymentMethod}` : 'Forma de Pagamento: Não informada';
 
-
     return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${discountCode || 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-      <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col md:flex-row gap-6">
+      <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col md:flex-row gap-6 max-h-[90vh] overflow-y-auto">
         <button onClick={() => setIsCartVisible(false)} className="absolute top-3 right-3 text-gray-500">✖</button>
 
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:w-2/3 overflow-y-auto max-h-[70vh] pr-2">
           <h2 className="text-2xl font-bold mb-4">Carrinho de Compra</h2>
           {cartItems.length === 0 ? (
             <p className="text-gray-500">Seu carrinho está vazio.</p>
@@ -149,7 +145,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
                 </p>
               </div>
 
-              <ul className="space-y-4 max-h-[50vh] overflow-y-auto pr-2 mt-4">
+              <ul className="space-y-4 overflow-y-auto max-h-[50vh] pr-2 mt-4">
                 {cartItems.map((item, idx) => (
                   <li key={idx} className="flex items-center border-b pb-4 group">
                     <div className="relative w-16 h-16 overflow-hidden rounded-lg">
@@ -173,7 +169,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
           )}
         </div>
 
-        <div className="w-full md:w-1/3">
+        <div className="w-full md:w-1/3 overflow-y-auto max-h-[70vh]">
           <h3 className="font-bold">Resumo do pedido</h3>
           <div className="mt-4">
             <label className="block text-sm text-gray-700">Forma de pagamento:</label>
@@ -204,7 +200,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               <input
                 type="text"
                 value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\\D/g, ''))}
+                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
                 className="w-full p-2 border rounded-lg mt-1"
                 placeholder="Ex: 01001000"
                 maxLength={8}
@@ -216,7 +212,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               {shippingCost !== null && <p className="text-green-500 text-sm mt-2">Frete: {freeShippingUnlocked ? 'Grátis' : `R$ ${shippingCost.toFixed(2)}`}</p>}
             </div>
           )}
-
 
           {autoDiscount && (
             <p className="text-green-600 text-sm mt-4 text-center font-medium">Cupom aplicado automaticamente: {discountForFreeShipping} (10% OFF)</p>
