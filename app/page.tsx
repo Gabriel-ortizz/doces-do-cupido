@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import ProductOptions from "@/components/ProductOptions";
@@ -127,7 +126,6 @@ const App: React.FC = () => {
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <ClerkProvider>
       <div className="bg-pink-50 min-h-screen text-center p-6">
         <Header
           searchQuery={searchQuery}
@@ -163,7 +161,7 @@ const App: React.FC = () => {
           />
         )}
       </div>
-    </ClerkProvider>
+
   );
 };
 

@@ -1,12 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import {
-  UserButton,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-} from '@clerk/nextjs';
+
 
 interface HeaderProps {
   searchQuery: string;
@@ -34,21 +28,6 @@ const Header: React.FC<HeaderProps> = ({
           aria-label="Buscar produtos"
         />
         <div className="flex items-center gap-1">
-          <SignedOut>
-            <SignInButton>
-              <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-400 transition-all duration-200">
-                Entrar
-              </button>
-            </SignInButton>
-            <SignUpButton>
-              <button className="bg-white text-pink-500 border border-pink-500 px-4 py-2 rounded-lg hover:bg-pink-100 transition-all duration-200">
-                Cadastrar-se
-              </button>
-            </SignUpButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
           <div
             onClick={() => setIsCartVisible(true)}
             className="cursor-pointer p-2 rounded-lg hover:bg-pink-300 transition-all duration-200 flex items-center"
