@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {}
+
+@layer base {
+  *.border-border {
+    @apply border-gray-300 ;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+
+

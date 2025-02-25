@@ -1,5 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
+import {
+  UserButton,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+} from '@clerk/nextjs';
 
 interface HeaderProps {
   searchQuery: string;
@@ -15,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({
   setIsCartVisible,
 }) => {
   return (
-    <header className="fixed top-0 left-0 w-full p-4 bg-pink-200 shadow-md z-50">
+    <header className="fixed top-0 left-0 w-full p-2 bg-pink-200 shadow-md z-50">
       <div className="flex justify-between items-center">
         <Image src="/img/Logo.png" alt="Logo" width={84} height={80} />
         <input
@@ -26,10 +33,25 @@ const Header: React.FC<HeaderProps> = ({
           onChange={(e) => setSearchQuery(e.target.value)}
           aria-label="Buscar produtos"
         />
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
+          <SignedOut>
+            <SignInButton>
+              <button className="bg-pink-500 text-white px-4 py-2 rounded-lg hover:bg-pink-400 transition-all duration-200">
+                Entrar
+              </button>
+            </SignInButton>
+            <SignUpButton>
+              <button className="bg-white text-pink-500 border border-pink-500 px-4 py-2 rounded-lg hover:bg-pink-100 transition-all duration-200">
+                Cadastrar-se
+              </button>
+            </SignUpButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
           <div
             onClick={() => setIsCartVisible(true)}
-            className="cursor-pointer p-3 rounded-lg hover:bg-pink-300 transition-all duration-200 flex items-center"
+            className="cursor-pointer p-2 rounded-lg hover:bg-pink-300 transition-all duration-200 flex items-center"
           >
             🛒 <span className="ml-1">{cartCount}</span>
           </div>

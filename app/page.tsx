@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
 import ProductOptions from "@/components/ProductOptions";
@@ -32,8 +33,7 @@ const App: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isClient, setIsClient] = useState(false);
-  
-  
+
   const isUnderMaintenance = false; // Defina como true para ativar a manutenção
 
   useEffect(() => {
@@ -42,7 +42,6 @@ const App: React.FC = () => {
 
   if (!isClient) return null;
 
-  
   if (isUnderMaintenance) {
     return <MaintenancePage />;
   }
@@ -60,6 +59,17 @@ const App: React.FC = () => {
       ],
     },
     {
+      name: "Mini Trufas",
+      image: "/img/Trufas.jpg",
+      options: [
+        { name: "Limão", price: 2.5 },
+        { name: "Morango", price: 2.5 },
+        { name: "Brigadeiro", price: 2.5 },
+        { name: "Maracujá", price: 2.5 },
+        { name: "Beijinho", price: 2.5 },
+      ],
+    },
+    {
       name: "Barras",
       image: "/img/Barras.webp",
       options: [
@@ -68,9 +78,7 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 18.0 },
         { name: "Maracujá", price: 18.0 },
         { name: "Beijinho", price: 18.0 },
-        
       ],
-     
     },
     {
       name: "Coração",
@@ -83,20 +91,17 @@ const App: React.FC = () => {
         { name: "Beijinho", price: 6.50 },
         
       ],
-     
     },
     {
       name: "Cones Recheado",
       image: "/img/cone.jpg",
       options: [
-        { name: "Limão", price: 12.00 },
-        { name: "Morango", price: 12.00 },
-        { name: "Brigadeiro", price: 12.00 },
-        { name: "Maracujá", price: 12.00 },
-        { name: "Beijinho", price: 12.00 },
-        
+        { name: "Limão", price: 12.0 },
+        { name: "Morango", price: 12.0 },
+        { name: "Brigadeiro", price: 12.0 },
+        { name: "Maracujá", price: 12.0 },
+        { name: "Beijinho", price: 12.0 },
       ],
-     
     },
   ];
 
@@ -104,7 +109,12 @@ const App: React.FC = () => {
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAddToCart = (productName: string, option: string, price: number, quantity: number) => {
+  const handleAddToCart = (
+    productName: string,
+    option: string,
+    price: number,
+    quantity: number
+  ) => {
     const selectedProduct = products.find((p) => p.name === productName);
     if (!selectedProduct) return;
 
@@ -117,33 +127,43 @@ const App: React.FC = () => {
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <div className="bg-pink-50 min-h-screen text-center p-6">
-      <Header
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        cartCount={cartCount}
-        setIsCartVisible={setIsCartVisible}
-      />
-
-      <main className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-        {filteredProducts.map((product) => (
-          <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
-        ))}
-      </main>
-
-      {selectedProduct && (
-        <ProductOptions
-          product={selectedProduct.name}
-          options={selectedProduct.options}
-          onAddToCart={handleAddToCart}
-          setSelectedProduct={() => setSelectedProduct(null)}
+    <ClerkProvider>
+      <div className="bg-pink-50 min-h-screen text-center p-6">
+        <Header
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          cartCount={cartCount}
+          setIsCartVisible={setIsCartVisible}
         />
-      )}
 
-      {isCartVisible && (
-        <Cart cartItems={cartItems} setCartItems={setCartItems} setIsCartVisible={setIsCartVisible} />
-      )}
-    </div>
+        <main className="mt-20 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+          {filteredProducts.map((product) => (
+            <ProductCard
+              key={product.name}
+              product={product}
+              onSelect={() => setSelectedProduct(product)}
+            />
+          ))}
+        </main>
+
+        {selectedProduct && (
+          <ProductOptions
+            product={selectedProduct.name}
+            options={selectedProduct.options}
+            onAddToCart={handleAddToCart}
+            setSelectedProduct={() => setSelectedProduct(null)}
+          />
+        )}
+
+        {isCartVisible && (
+          <Cart
+            cartItems={cartItems}
+            setCartItems={setCartItems}
+            setIsCartVisible={setIsCartVisible}
+          />
+        )}
+      </div>
+    </ClerkProvider>
   );
 };
 
