@@ -33,10 +33,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const discountForFreeShipping = 'FRETEGRATIS10';
   const autoDiscountValue = 0.1;
 
-  const customer = { name: 'Cliente Exemplo', email: 'cliente@email.com', phone: '11999999999' };
-  const amount = 150.00;
-  const description = 'Pedido Loja de Moda Feminina';
-
   const fetchShippingCost = async () => {
     if (freeShippingUnlocked) {
       setShippingCost(0);
@@ -206,7 +202,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               <input
                 type="text"
                 value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\\D/g, ''))}
+                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
                 className="w-full p-2 border rounded-lg mt-1"
                 placeholder="Ex: 01001000"
                 maxLength={8}
