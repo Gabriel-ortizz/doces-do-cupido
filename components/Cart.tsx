@@ -33,6 +33,10 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const discountForFreeShipping = 'FRETEGRATIS10';
   const autoDiscountValue = 0.1;
 
+  const customer = { name: 'Cliente Exemplo', email: 'cliente@email.com', phone: '11999999999' };
+  const amount = 150.00;
+  const description = 'Pedido Loja de Moda Feminina';
+
   const fetchShippingCost = async () => {
     if (freeShippingUnlocked) {
       setShippingCost(0);
@@ -173,7 +177,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
         <div className="w-full md:w-1/3 overflow-y-auto max-h-[70vh]">
           <h3 className="font-bold">Resumo do pedido</h3>
           <div className="mt-4">
-            <CheckoutButton amount={amount} description={description} customer={customer} />
+           
             <label className="block text-sm text-gray-700">Forma de pagamento:</label>
             <label className="flex items-center gap-2 mt-2">
               <input type="radio" name="payment" value="cartao" onChange={() => setPaymentMethod('cartao')} /> Cartão
@@ -202,7 +206,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               <input
                 type="text"
                 value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => setCep(e.target.value.replace(/\\D/g, ''))}
                 className="w-full p-2 border rounded-lg mt-1"
                 placeholder="Ex: 01001000"
                 maxLength={8}
@@ -230,6 +234,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             >
               Comprar no WhatsApp
             </button>
+           
           </div>
         </div>
       </div>

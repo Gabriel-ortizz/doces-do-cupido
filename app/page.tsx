@@ -55,6 +55,7 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 4.5 },
         { name: "Maracujá", price: 4.5 },
         { name: "Beijinho", price: 4.5 },
+        { name: "Amendoim", price: 4.5 },
       ],
     },
     {
@@ -66,6 +67,7 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 2.5 },
         { name: "Maracujá", price: 2.5 },
         { name: "Beijinho", price: 2.5 },
+        { name: "Amendoim", price: 2.5 },
       ],
     },
     {
@@ -77,6 +79,7 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 18.0 },
         { name: "Maracujá", price: 18.0 },
         { name: "Beijinho", price: 18.0 },
+        { name: "Amendoim", price: 18.0 },
       ],
     },
     {
@@ -88,6 +91,7 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 6.50 },
         { name: "Maracujá", price: 6.50 },
         { name: "Beijinho", price: 6.50 },
+        { name: "Amendoim", price: 6.50 },
         
       ],
     },
@@ -100,8 +104,60 @@ const App: React.FC = () => {
         { name: "Brigadeiro", price: 12.0 },
         { name: "Maracujá", price: 12.0 },
         { name: "Beijinho", price: 12.0 },
+        { name: "Amendoim", price: 12.0 },
       ],
     },
+    {
+      name: "Ovo Trufado",
+      image: "/img/ovo_trufado.jpg",
+      options: [
+        { name: "Limão 350g", price: 85.0 },
+        { name: "Morango 350g", price: 85.0 },
+        { name: "Brigadeiro 350g", price: 85.0 },
+        { name: "Maracujá 350g", price: 85.0 },
+        { name: "Beijinho 350g", price: 85.0 },
+        { name: "Amendoim 350g", price: 85.0 },
+        { name: "Limão 250g", price: 75.0 },
+        { name: "Morango 250g", price: 75.0 },
+        { name: "Brigadeiro 250g", price: 75.0 },
+        { name: "Maracujá 250g", price: 75.0 },
+        { name: "Beijinho 250g", price: 75.0 },
+        { name: "Amendoim 250g", price: 75.0 },
+      ],
+    },
+    {
+      name: "Ovo de Colher",
+      image: "/img/ovo_de_colher.jpg",
+      options: [
+       
+        { name: "KitKat 350g", price: 100.0 },
+        { name: "Brigadeiro com Morango 350g", price: 100.0 },
+        { name: "Ninho com Nutella 350g", price: 100.0 },
+        { name: "Ninho com Morango 350g", price: 100.0 },
+        
+        { name: "KitKat 250g", price: 90.0 },
+        { name: "Brigadeiro com Morango 250g", price: 90.0 },
+        { name: "Ninho com Nutella 250g", price: 90.0 },
+        { name: "Ninho com Morango 250g", price: 90.0 },
+      ],
+    },
+    {
+      name: "Ovo Gourmet",
+      image: "/img/ovo_gurmet.jpg",
+      options: [
+        { name: "Ferrero-Rocher 350g", price: 120.0 },
+        { name: "KitKat 350g", price: 120.0 },
+        { name: "Brigadeiro com Morango 350g", price: 120.0 },
+        { name: "Ninho com Nutella 350g", price: 120.0 },
+        { name: "Ninho com Morango 350g", price: 120.0 },
+        { name: "Ferrero-Rocher 250g", price: 100.0 },
+        { name: "KitKat 250g", price: 100.0 },
+        { name: "Brigadeiro com Morango 250g", price: 100.0 },
+        { name: "Ninho com Nutella 250g", price: 100.0 },
+        { name: "Ninho com Morango 250g", price: 100.0 },
+      ],
+    },
+   
   ];
 
   const filteredProducts = products.filter((product) =>
