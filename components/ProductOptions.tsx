@@ -43,7 +43,8 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
         <h2 className="text-2xl font-bold text-gray-800 mb-4">{product}</h2>
         <p className="text-gray-600 mb-2">Escolha uma opção:</p>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-4">
+        {/* Container com scroll para as opções */}
+        <div className="max-h-60 overflow-y-auto flex flex-wrap justify-center gap-3 mb-4">
           {options.map((option, idx) => (
             <button
               key={idx}

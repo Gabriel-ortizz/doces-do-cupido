@@ -143,7 +143,7 @@ const App: React.FC = () => {
     },
     {
       name: "Ovo Gourmet",
-      image: "/img/ovo_gurmet.jpg",
+      image: "/img/ovo_gourmet.jpg",
       options: [
         { name: "Ferrero-Rocher 350g", price: 120.0 },
         { name: "KitKat 350g", price: 120.0 },
