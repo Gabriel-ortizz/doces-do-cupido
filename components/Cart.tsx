@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import CheckoutButton from '../components/CheckoutButton'; // Certifique-se do caminho correto
+
 
 interface CartItem {
   name: string;
@@ -33,6 +33,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const discountForFreeShipping = 'FRETEGRATIS10';
   const autoDiscountValue = 0.1;
 
+ 
   const fetchShippingCost = async () => {
     if (freeShippingUnlocked) {
       setShippingCost(0);
@@ -202,7 +203,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               <input
                 type="text"
                 value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
+                onChange={(e) => setCep(e.target.value.replace(/\\D/g, ''))}
                 className="w-full p-2 border rounded-lg mt-1"
                 placeholder="Ex: 01001000"
                 maxLength={8}
@@ -230,7 +231,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             >
               Comprar no WhatsApp
             </button>
-            <CheckoutButton amount={amount} description={description} customer={customer} />
+           
           </div>
         </div>
       </div>
