@@ -100,19 +100,19 @@ const App: React.FC = () => {
       image: "/img/ovo_de_colher.jpg",
       options: [
        
-      { name: "Limão 350g", price: 100.0 },
-        { name: "Morango 350g", price: 100.0 },
-        { name: "Brigadeiro 350g", price: 100.0 },
-        { name: "Maracujá 350g", price: 100.0 },
-        { name: "Beijinho 350g", price: 100.0 },
-        { name: "Paçoca 350g", price: 100.0 },
+      { name: "Limão 350g", price: 90.0 },
+        { name: "Morango 350g", price: 90.0 },
+        { name: "Brigadeiro 350g", price: 90.0 },
+        { name: "Maracujá 350g", price: 90.0 }
+        { name: "Beijinho 350g", price: 90.0 },
+        { name: "Paçoca 350g", price: 90.0 },
 
-        { name: "Limão 250g", price: 70.0 },
-        { name: "Morango 250g", price: 70.0 },
-        { name: "Brigadeiro 250g", price: 70.0 },
-        { name: "Maracujá 250g", price: 70.0 },
-        { name: "Beijinho 250g", price: 70.0 },
-        { name: "Paçoca 250g", price: 70.0 },
+        { name: "Limão 250g", price: 80.0 },
+        { name: "Morango 250g", price: 80.0 },
+        { name: "Brigadeiro 250g", price: 80.0 },
+        { name: "Maracujá 250g", price: 80.0 },
+        { name: "Beijinho 250g", price: 80.0 },
+        { name: "Paçoca 250g", price: 80.0 },
       ],
     },
     {
