@@ -100,10 +100,10 @@ const App: React.FC = () => {
       image: "/img/ovo_de_colher.jpg",
       options: [
        
-      { name: "Limão 350g", price: 90.0 },
+     { name: "Limão 350g", price: 90.0 },
         { name: "Morango 350g", price: 90.0 },
         { name: "Brigadeiro 350g", price: 90.0 },
-        { name: "Maracujá 350g", price: 90.0 }
+        { name: "Maracujá 350g", price: 90.0 },
         { name: "Beijinho 350g", price: 90.0 },
         { name: "Paçoca 350g", price: 90.0 },
 
