@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
-import ProductOptions from "@/components/ProductOptions";
+
 import Cart from "@/components/Cart";
 import MaintenancePage from "@/components/MaintenancePage";
+import ProductOptions from "@/components/ProductOptions";
 
 type ProductOption = {
   name: string;
@@ -96,49 +97,16 @@ const App: React.FC = () => {
       ],
     },
     {
-      name: "Cones Recheado",
-      image: "/img/cone.jpg",
-      options: [
-        { name: "Limão", price: 12.0 },
-        { name: "Morango", price: 12.0 },
-        { name: "Brigadeiro", price: 12.0 },
-        { name: "Maracujá", price: 12.0 },
-        { name: "Beijinho", price: 12.0 },
-        { name: "Amendoim", price: 12.0 },
-      ],
-    },
-    {
-      name: "Ovo Trufado",
-      image: "/img/ovo_trufado.jpg",
-      options: [
-        { name: "Limão 350g", price: 85.0 },
-        { name: "Morango 350g", price: 85.0 },
-        { name: "Brigadeiro 350g", price: 85.0 },
-        { name: "Maracujá 350g", price: 85.0 },
-        { name: "Beijinho 350g", price: 85.0 },
-        { name: "Amendoim 350g", price: 85.0 },
-        { name: "Limão 250g", price: 75.0 },
-        { name: "Morango 250g", price: 75.0 },
-        { name: "Brigadeiro 250g", price: 75.0 },
-        { name: "Maracujá 250g", price: 75.0 },
-        { name: "Beijinho 250g", price: 75.0 },
-        { name: "Amendoim 250g", price: 75.0 },
-      ],
-    },
-    {
       name: "Ovo de Colher",
       image: "/img/ovo_de_colher.jpg",
       options: [
        
-        { name: "KitKat 350g", price: 100.0 },
-        { name: "Brigadeiro com Morango 350g", price: 100.0 },
-        { name: "Ninho com Nutella 350g", price: 100.0 },
-        { name: "Ninho com Morango 350g", price: 100.0 },
-        
-        { name: "KitKat 250g", price: 90.0 },
-        { name: "Brigadeiro com Morango 250g", price: 90.0 },
-        { name: "Ninho com Nutella 250g", price: 90.0 },
-        { name: "Ninho com Morango 250g", price: 90.0 },
+        { name: "Limão", price: 0 },
+        { name: "Morango 350g", price: 90.0 },
+        { name: "Brigadeiro 350g", price: 90.0 },
+        { name: "Maracujá 350g", price: 90.0 },
+        { name: "Beijinho 350g", price: 90.0 },
+        { name: "Paçoca 350g", price: 90.0 },
       ],
     },
     {
@@ -147,14 +115,35 @@ const App: React.FC = () => {
       options: [
         { name: "Ferrero-Rocher 350g", price: 120.0 },
         { name: "KitKat 350g", price: 120.0 },
-        { name: "Brigadeiro com Morango 350g", price: 120.0 },
+        { name: "Oreo 350g", price: 120.0 },
         { name: "Ninho com Nutella 350g", price: 120.0 },
-        { name: "Ninho com Morango 350g", price: 120.0 },
-        { name: "Ferrero-Rocher 250g", price: 100.0 },
-        { name: "KitKat 250g", price: 100.0 },
-        { name: "Brigadeiro com Morango 250g", price: 100.0 },
-        { name: "Ninho com Nutella 250g", price: 100.0 },
-        { name: "Ninho com Morango 250g", price: 100.0 },
+        { name: "Ninho com Morango", price: 0 },
+        
+       
+      ],
+    },
+    {
+      name: "Ovos Kids",
+      image: "/img/mini_ovos.jpeg",
+      options: [
+        { name: "Brigadeiro", price: 27.90 },
+        { name: "Morango", price: 27.90 },
+        { name: "Maracujá", price: 27.90 },
+        { name: "Limão", price: 27.90 },
+        { name: "Paçoca", price: 27.90 },
+        { name: "Beijinho", price: 27.90 },
+      ],
+    },
+    {
+      name: "Ovos faça em casa",
+      image: "/img/ovos_montar.jpg",
+      options: [
+        { name: "Brigadeiro", price: 40.00 },
+        { name: "Morango", price: 40.00 },
+        { name: "Maracujá", price: 40.00 },
+        { name: "Limão", price: 40.00 },
+        { name: "Paçoca", price: 40.00 },
+        { name: "Beijinho", price: 40.00 },
       ],
     },
    
