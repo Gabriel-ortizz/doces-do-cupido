@@ -46,7 +46,69 @@ const App: React.FC = () => {
     return <MaintenancePage />;
   }
 
-  
+  const products: Product[] = [
+    {
+      name: "Trufas",
+      image: "/img/Trufas.jpg",
+      options: [
+        
+      ],
+    },
+    {
+      name: "Mini Trufas",
+      image: "/img/Trufas.jpg",
+      options: [
+        
+      ],
+    },
+    {
+      name: "Barras",
+      image: "/img/Barras.webp",
+      options: [
+       
+      ],
+    },
+    {
+      name: "Coração",
+      image: "/img/coraçao_de_chocolate.jpg",
+      options: [
+      
+        
+      ],
+    },
+    {
+      name: "Ovo de Colher",
+      image: "/img/ovo_de_colher.jpg",
+      options: [
+      
+      ],
+    },
+    {
+      name: "Ovo Gourmet",
+      image: "/img/ovo_gourmet.jpg",
+      options: [
+        
+        
+       
+      ],
+    },
+    {
+      name: "Ovos Kids",
+      image: "/img/mini_ovos.jpeg",
+      options: [
+     
+      ],
+    },
+    {
+      name: "Ovos faça em casa",
+      image: "/img/ovos_montar.jpg",
+      options: [
+        
+      ],
+    },
+   
+  ];
+
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
