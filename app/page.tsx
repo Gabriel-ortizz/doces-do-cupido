@@ -113,10 +113,10 @@ const App: React.FC = () => {
       name: "Ovo Gourmet",
       image: "/img/ovo_gourmet.jpg",
       options: [
-        { name: "Ferrero-Rocher 350g", price: 120.0 },
-        { name: "KitKat 350g", price: 120.0 },
-        { name: "Oreo 350g", price: 120.0 },
-        { name: "Ninho com Nutella 350g", price: 120.0 },
+        { name: "Ferrero-Rocher", price: 120.0 },
+        { name: "KitKat", price: 120.0 },
+        { name: "Oreo", price: 120.0 },
+        { name: "Ninho com Nutella ", price: 120.0 },
         { name: "Ninho com Morango", price: 0 },
         
        
@@ -126,7 +126,7 @@ const App: React.FC = () => {
       name: "Ovos Kids",
       image: "/img/mini_ovos.jpeg",
       options: [
-        { name: "Brigadeiro", price: 27.90 },
+        { name: "Brigadeiro", price: 12.90 },
         { name: "Morango", price: 27.90 },
         { name: "Maracujá", price: 27.90 },
         { name: "Limão", price: 27.90 },
