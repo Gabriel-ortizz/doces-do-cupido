@@ -75,29 +75,23 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
   const [quantity, setQuantity] = useState<number>(1);
 
   const calculateTotalPrice = () => {
-    let basePrice = customizableProducts.includes(product) ? selectedSize?.price || 0 : options[0]?.price || 0;
-
-    let extrasPrice = selectedExtras.reduce((sum, extra) => sum + extra.price, 0);
-    let chocolatePrice = selectedChocolate
+    const basePrice = customizableProducts.includes(product) ? selectedSize?.price || 0 : options[0]?.price || 0;
+    const extrasPrice = selectedExtras.reduce((sum, extra) => sum + extra.price, 0);
+    const chocolatePrice = selectedChocolate
       ? customizableProducts.includes(product)
         ? chocolateExtraPrice[selectedChocolate].custom
         : chocolateExtraPrice[selectedChocolate].normal
       : 0;
-
-    let total = (basePrice + extrasPrice + chocolatePrice) * quantity;
-
-    // Aplicar desconto especial para "Ovos Kids"
+  
+    const total = (basePrice + extrasPrice + chocolatePrice) * quantity;
+  
     if (product === "Ovos Kids") {
-      if (quantity === 3) {
-        return 30; // Preço fixo de R$ 30,00 para três unidades
-      } else {
-        return quantity * 12.9; // Preço normal unitário de R$ 12,90
-      }
+      return quantity === 3 ? 30 : quantity * 12.9;
     }
-
+  
     return total;
   };
-
+  
   
   const selectFilling = (filling: string) => {
     setSelectedFilling(filling);
