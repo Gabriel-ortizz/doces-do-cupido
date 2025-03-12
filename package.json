@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",
+    "@mercadopago/sdk-react": "^1.0.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-progress": "^1.1.2",
     "@radix-ui/react-separator": "^1.1.2",
@@ -23,13 +24,13 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "lucide-react": "^0.475.0",
-    "mercadopago": "^1.5.17",
+    "mercadopago": "^2.3.0",
     "motion": "^12.0.6",
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-confetti": "^6.2.3",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.5",
+    "react-router-dom": "^7.3.0",
     "recharts": "^2.15.1",
     "stripe": "^17.6.0"
   },

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 
+
 interface CartItem {
   name: string;
   image: string;
@@ -231,6 +232,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             >
               Comprar no WhatsApp
             </button>
+
            
           </div>
         </div>

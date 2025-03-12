@@ -3,9 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import ProductCard from "@/components/ProductCard";
-import ProductOptions from "@/components/ProductOptions";
+
 import Cart from "@/components/Cart";
 import MaintenancePage from "@/components/MaintenancePage";
+import ProductOptions from "@/components/ProductOptions";
 
 type ProductOption = {
   name: string;
@@ -45,95 +46,7 @@ const App: React.FC = () => {
     return <MaintenancePage />;
   }
 
-  const products: Product[] = [
-    {
-      name: "Trufas",
-      image: "/img/Trufas.jpg",
-      options: [
-        { name: "Limão", price: 4.5 },
-        { name: "Morango", price: 4.5 },
-        { name: "Brigadeiro", price: 4.5 },
-        { name: "Maracujá", price: 4.5 },
-        { name: "Beijinho", price: 4.5 },
-        { name: "Amendoim", price: 4.5 },
-      ],
-    },
-    {
-      name: "Mini Trufas",
-      image: "/img/Trufas.jpg",
-      options: [
-        { name: "Limão", price: 2.5 },
-        { name: "Morango", price: 2.5 },
-        { name: "Brigadeiro", price: 2.5 },
-        { name: "Maracujá", price: 2.5 },
-        { name: "Beijinho", price: 2.5 },
-        { name: "Amendoim", price: 2.5 },
-      ],
-    },
-    {
-      name: "Barras",
-      image: "/img/Barras.webp",
-      options: [
-        { name: "Limão", price: 18.0 },
-        { name: "Morango", price: 18.0 },
-        { name: "Brigadeiro", price: 18.0 },
-        { name: "Maracujá", price: 18.0 },
-        { name: "Beijinho", price: 18.0 },
-        { name: "Amendoim", price: 18.0 },
-      ],
-    },
-    {
-      name: "Coração",
-      image: "/img/coraçao_de_chocolate.jpg",
-      options: [
-        { name: "Limão", price: 6.50 },
-        { name: "Morango", price: 6.50 },
-        { name: "Brigadeiro", price: 6.50 },
-        { name: "Maracujá", price: 6.50 },
-        { name: "Beijinho", price: 6.50 },
-        { name: "Amendoim", price: 6.50 },
-        
-      ],
-    },
-    {
-      name: "Ovo de Colher",
-      image: "/img/ovo_de_colher.jpg",
-      options: [
-       
-     { name: "Limão 350g", price: 90.0 },
-        { name: "Morango 350g", price: 90.0 },
-        { name: "Brigadeiro 350g", price: 90.0 },
-        { name: "Maracujá 350g", price: 90.0 },
-        { name: "Beijinho 350g", price: 90.0 },
-        { name: "Paçoca 350g", price: 90.0 },
-
-        { name: "Limão 250g", price: 80.0 },
-        { name: "Morango 250g", price: 80.0 },
-        { name: "Brigadeiro 250g", price: 80.0 },
-        { name: "Maracujá 250g", price: 80.0 },
-        { name: "Beijinho 250g", price: 80.0 },
-        { name: "Paçoca 250g", price: 80.0 },
-      ],
-    },
-    {
-      name: "Ovo Gourmet",
-      image: "/img/ovo_gourmet.jpg",
-      options: [
-        { name: "Ferrero-Rocher 350g", price: 120.0 },
-        { name: "KitKat 350g", price: 120.0 },
-        { name: "Oreo 350g", price: 120.0 },
-        { name: "Ninho com Nutella 350g", price: 120.0 },
-        { name: "Ninho com Morango 350g", price: 120.0 },
-        { name: "Ferrero-Rocher 250g", price: 100.0 },
-        { name: "KitKat 250g", price: 100.0 },
-        { name: "Oreo 250g", price: 100.0 },
-        { name: "Ninho com Nutella 250g", price: 100.0 },
-        { name: "Ninho com Morango 250g", price: 100.0 },
-      ],
-    },
-   
-  ];
-
+  
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
