@@ -53,11 +53,11 @@
   };
 
   const extras: ProductOption[] = [
-    { name: "Nutella", price: 2 },
-    { name: "Paçoca", price: 1.5 },
+    { name: "Nutella", price: 3.5 },
+    { name: "Paçoca", price: 2.5 },
     { name: "Castanhas", price: 2.5 },
-    { name: "Disquete", price: 3 },
-    { name: "Granulado", price: 3 },
+    { name: "M&M", price: 2.5 },
+    { name: "Granulado", price: 2 },
     { name: "Uva Verde", price: 3 },
     { name: "Morango", price: 3 },
   ];
