@@ -138,12 +138,12 @@ const App: React.FC = () => {
       name: "Ovos faça em casa",
       image: "/img/ovos_montar.jpg",
       options: [
-        { name: "Brigadeiro", price: 40.00 },
-        { name: "Morango", price: 40.00 },
-        { name: "Maracujá", price: 40.00 },
-        { name: "Limão", price: 40.00 },
-        { name: "Paçoca", price: 40.00 },
-        { name: "Beijinho", price: 40.00 },
+        { name: "Brigadeiro", price: 55.00 },
+        { name: "Morango", price: 55.00 },
+        { name: "Maracujá", price: 55.00 },
+        { name: "Limão", price: 55.00 },
+        { name: "Paçoca", price: 55.00 },
+        { name: "Beijinho", price: 55.00 },
       ],
     },
    
