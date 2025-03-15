@@ -38,7 +38,7 @@ const chocolateExtraPrice: Record<string, { normal: number; custom: number }> = 
   "Ao Leite": { normal: 0, custom: 0 },
   "Meio Amargo": { normal: 3.5, custom:4.5  },
   "Branco": { normal: 3.5, custom: 5.5 },
-  "Pistache": { normal: 7, custom: 8.5 },
+  "Pistache": { normal: 7.0, custom: 8.5 },
 };
 
 const sizePrices: Record<string, ProductOption[]> = {
