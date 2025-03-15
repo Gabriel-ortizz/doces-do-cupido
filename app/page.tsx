@@ -126,7 +126,7 @@ const App: React.FC = () => {
       name: "Ovos Kids",
       image: "/img/mini_ovos.jpeg",
       options: [
-        { name: "Brigadeiro", price: 27.90 },
+        { name: "Brigadeiro", price: 30.00 },
         { name: "Morango", price: 27.90 },
         { name: "Maracujá", price: 27.90 },
         { name: "Limão", price: 27.90 },
@@ -138,12 +138,12 @@ const App: React.FC = () => {
       name: "Ovos faça em casa",
       image: "/img/ovos_montar.jpg",
       options: [
-        { name: "Brigadeiro", price: 40.00 },
-        { name: "Morango", price: 40.00 },
-        { name: "Maracujá", price: 40.00 },
-        { name: "Limão", price: 40.00 },
-        { name: "Paçoca", price: 40.00 },
-        { name: "Beijinho", price: 40.00 },
+        { name: "Brigadeiro", price: 55.00 },
+        { name: "Morango", price: 55.00 },
+        { name: "Maracujá", price: 55.00 },
+        { name: "Limão", price: 55.00 },
+        { name: "Paçoca", price: 55.00 },
+        { name: "Beijinho", price: 55.00 },
       ],
     },
    
