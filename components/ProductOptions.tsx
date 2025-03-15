@@ -38,7 +38,7 @@ const chocolateExtraPrice: Record<string, { normal: number; custom: number }> = 
   "Ao Leite": { normal: 0, custom: 0 },
   "Meio Amargo": { normal: 3.5, custom:4.5  },
   "Branco": { normal: 3.5, custom: 5.5 },
-  "Pistache": { normal: 7.0, custom: 8.5 },
+  "Pistache": { normal: 7, custom: 8.5 },
 };
 
 const sizePrices: Record<string, ProductOption[]> = {
@@ -106,63 +106,6 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
     );
   };
 
-<<<<<<< dev
-=======
-  const extras: ProductOption[] = [
-    { name: "Nutella", price: 3.5 },
-    { name: "Paçoca", price: 2.5 },
-    { name: "Castanhas", price: 2.5 },
-    { name: "M&M", price: 2.5 },
-    { name: "Granulado", price: 2 },
-    { name: "Uva Verde", price: 3 },
-    { name: "Morango", price: 3 },
-  ];
-
-  const ProductOptions: React.FC<ProductOptionsProps> = ({
-    product,
-    options,
-    onAddToCart,
-    setSelectedProduct,
-  }) => {
-    const [selectedChocolate, setSelectedChocolate] = useState<string | null>(null);
-    const [selectedFilling, setSelectedFilling] = useState<string | null>(null);
-    const [selectedSize, setSelectedSize] = useState<ProductOption | null>(null);
-    const [selectedExtras, setSelectedExtras] = useState<ProductOption[]>([]);
-    const [quantity, setQuantity] = useState<number>(1);
-
-    const calculateTotalPrice = () => {
-      const basePrice = customizableProducts.includes(product) ? selectedSize?.price || 0 : options[0]?.price || 0;
-      const extrasPrice = selectedExtras.reduce((sum, extra) => sum + extra.price, 0);
-      const chocolatePrice = selectedChocolate
-        ? customizableProducts.includes(product)
-          ? chocolateExtraPrice[selectedChocolate].custom
-          : chocolateExtraPrice[selectedChocolate].normal
-        : 0;
-    
-      const total = (basePrice + extrasPrice + chocolatePrice) * quantity;
-    
-      if (product === "Ovos Kids") {
-        return quantity === 3 ? 30 : quantity * 12.9;
-      }
-    
-      return total;
-    };
-    
-    
-    const selectFilling = (filling: string) => {
-      setSelectedFilling(filling);
-    };
-
-
-
-    const toggleExtra = (extra: ProductOption) => {
-      setSelectedExtras((prev) =>
-        prev.some((e) => e.name === extra.name)
-          ? prev.filter((e) => e.name !== extra.name)
-          : [...prev, extra]
-      );
-    };
->>>>>>> main
 
 
   return (
