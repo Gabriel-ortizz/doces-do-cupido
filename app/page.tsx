@@ -126,7 +126,7 @@ const App: React.FC = () => {
       name: "Ovos Kids",
       image: "/img/mini_ovos.jpeg",
       options: [
-        { name: "Brigadeiro", price: 27.90 },
+        { name: "Brigadeiro", price: 30.00 },
         { name: "Morango", price: 27.90 },
         { name: "Maracujá", price: 27.90 },
         { name: "Limão", price: 27.90 },
