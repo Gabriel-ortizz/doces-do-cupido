@@ -135,7 +135,7 @@ const App: React.FC = () => {
       ],
     },
     {
-      name: "Ovos faça em casa",
+      name: "Mini Confeiteiro",
       image: "/img/ovos_montar.jpg",
       options: [
         { name: "Brigadeiro", price: 55.00 },
