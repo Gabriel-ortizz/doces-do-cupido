@@ -31,7 +31,7 @@ const productFillings: Record<string, string[]> = {
   "Barras": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
   "Coração": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
   "Ovos Kids": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Ovos faça em casa": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
+  "Mini Confeiteiro": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
 };
 
 const chocolateExtraPrice: Record<string, { normal: number; custom: number }> = {
