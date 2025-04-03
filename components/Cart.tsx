@@ -31,7 +31,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const whatsappNumber = '5521991453401';
   const freeShippingThreshold = 50;
   const discountForFreeShipping = 'FRETEGRATIS10';
-  const autoDiscountValue = 0.1;
+  const autoDiscountValue = 0.2;
 
  
   const fetchShippingCost = async () => {
@@ -136,13 +136,13 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
           ) : (
             <>
               <div className="bg-gray-100 p-3 rounded-lg">
-                <p className="text-sm font-medium mb-1">Progresso para Frete Grátis e 10% de desconto:</p>
+                <p className="text-sm font-medium mb-1">Progresso para Frete Grátis e 20% de desconto:</p>
                 <div className="w-full bg-gray-300 h-3 rounded-lg overflow-hidden">
                   <div className={`h-3 ${progressPercentage === 100 ? 'bg-green-500' : 'bg-yellow-500'}`} style={{ width: `${progressPercentage}%` }}></div>
                 </div>
                 <p className="text-xs text-center mt-1">
                   {progressPercentage === 100
-                    ? 'Parabéns! Você ganhou Frete Grátis e 10% de desconto!'
+                    ? 'Parabéns! Você ganhou Frete Grátis e 20% de desconto!'
                     : `Faltam R$ ${(freeShippingThreshold - totalPrice).toFixed(2)} para Frete Grátis!`}
                 </p>
               </div>
@@ -217,7 +217,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
           )}
 
           {autoDiscount && (
-            <p className="text-green-600 text-sm mt-4 text-center font-medium">Cupom aplicado automaticamente: {discountForFreeShipping} (10% OFF)</p>
+            <p className="text-green-600 text-sm mt-4 text-center font-medium">Cupom aplicado automaticamente: {discountForFreeShipping} (20% OFF)</p>
           )}
 
           <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
