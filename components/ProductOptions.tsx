@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 type ProductOption = {
@@ -70,11 +70,40 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
   onAddToCart,
   setSelectedProduct,
 }) => {
+  const modalRef = useRef<HTMLDivElement>(null); // para detectar clique fora
   const [selectedChocolate, setSelectedChocolate] = useState<string | null>(null);
   const [selectedFilling, setSelectedFilling] = useState<string | null>(null);
   const [selectedSize, setSelectedSize] = useState<ProductOption | null>(null);
   const [selectedExtras, setSelectedExtras] = useState<ProductOption[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
+
+  // Fecha o modal ao clicar fora dele
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        setSelectedProduct(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setSelectedProduct]);
+
+  // Fecha o modal ao apertar ESC
+  useEffect(() => {
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProduct(null);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [setSelectedProduct]);
 
   const calculateTotalPrice = () => {
     const basePrice = customizableProducts.includes(product) ? selectedSize?.price || 0 : options[0]?.price || 0;
@@ -84,19 +113,11 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
         ? chocolateExtraPrice[selectedChocolate].custom
         : chocolateExtraPrice[selectedChocolate].normal
       : 0;
-  
-    const total = (basePrice + extrasPrice + chocolatePrice) * quantity;
-  
-  
-    return total;
-  };
-  
-  
-  const selectFilling = (filling: string) => {
-    setSelectedFilling(filling);
+
+    return (basePrice + extrasPrice + chocolatePrice) * quantity;
   };
 
-
+  const selectFilling = (filling: string) => setSelectedFilling(filling);
 
   const toggleExtra = (extra: ProductOption) => {
     setSelectedExtras((prev) =>
@@ -106,12 +127,12 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
     );
   };
 
-
-
   return (
     <div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50">
-    <div className="w-80 sm:w-96 bg-white max-h-screen shadow-xl p-6 relative transform transition-transform duration-300 ease-in-out overflow-y-auto rounded-2xl">
-
+      <div
+        ref={modalRef}
+        className="w-80 sm:w-96 bg-white max-h-screen shadow-xl p-6 relative transform transition-transform duration-300 ease-in-out overflow-y-auto rounded-2xl"
+      >
         <button
           onClick={() => setSelectedProduct(null)}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
