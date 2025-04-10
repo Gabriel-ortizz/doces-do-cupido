@@ -15,6 +15,9 @@ interface CartProps {
   setIsCartVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+type DeliveryMethod = 'retirada' | 'entrega';
+type PaymentMethod = 'cartao' | 'pix' | 'dinheiro';
+
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
   const [cep, setCep] = useState('');
   const [logradouro, setLogradouro] = useState('');
@@ -22,8 +25,8 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const [shippingCost, setShippingCost] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [deliveryMethod, setDeliveryMethod] = useState<'retirada' | 'entrega' | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<'cartao' | 'pix' | 'dinheiro' | null>(null);
+  const [deliveryMethod, setDeliveryMethod] = useState<DeliveryMethod | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
   const [checkoutError, setCheckoutError] = useState('');
   const whatsappNumber = '5521991453401';
   const discountCode = 'DESCONTO20';
@@ -168,9 +171,10 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
             <div className="mt-4">
               <label className="block text-sm text-gray-700">Forma de pagamento:</label>
-              {['cartao', 'pix', 'dinheiro'].map((type) => (
+              {(['cartao', 'pix', 'dinheiro'] as PaymentMethod[]).map((type) => (
                 <label key={type} className="flex items-center gap-2 mt-2">
-                  <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type as any)} /> {type.charAt(0).toUpperCase() + type.slice(1)}
+                  <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type)} />
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
                 </label>
               ))}
             </div>
