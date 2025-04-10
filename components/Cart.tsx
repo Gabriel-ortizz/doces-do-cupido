@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-
 
 interface CartItem {
   name: string;
@@ -18,28 +17,20 @@ interface CartProps {
 
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
   const [cep, setCep] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [numero, setNumero] = useState('');
   const [shippingCost, setShippingCost] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [deliveryMethod, setDeliveryMethod] = useState<'retirada' | 'entrega' | null>(null);
-  const [discountCode, setDiscountCode] = useState('');
-  const [discountValue, setDiscountValue] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<'cartao' | 'pix' | 'dinheiro' | null>(null);
-  const [freeShippingUnlocked, setFreeShippingUnlocked] = useState(false);
-  const [autoDiscount, setAutoDiscount] = useState(false);
   const [checkoutError, setCheckoutError] = useState('');
   const whatsappNumber = '5521991453401';
-  const freeShippingThreshold = 50;
-  const discountForFreeShipping = 'FRETEGRATIS10';
-  const autoDiscountValue = 0.2;
+  const discountCode = 'DESCONTO20';
+  const discountValue = 0.2;
+  const minTotalForDiscount = 50;
 
- 
   const fetchShippingCost = async () => {
-    if (freeShippingUnlocked) {
-      setShippingCost(0);
-      return;
-    }
-
     if (cep.length !== 8) {
       setError('Digite um CEP válido (8 dígitos).');
       return;
@@ -60,7 +51,8 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
       const state = data.uf;
       const cost = state === 'RJ' ? 5 : 10;
-      setShippingCost(freeShippingUnlocked ? 0 : cost);
+      setShippingCost(cost);
+      setLogradouro(data.logradouro);
     } catch {
       setError('Erro ao buscar o CEP.');
     } finally {
@@ -81,31 +73,21 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const discountAmount = totalPrice * discountValue;
+  const cupomAtivo = totalPrice >= minTotalForDiscount;
+  const discountAmount = cupomAtivo ? totalPrice * discountValue : 0;
   const finalTotal = (totalPrice - discountAmount + (shippingCost || 0)).toFixed(2);
-
-  const progressPercentage = Math.min((totalPrice / freeShippingThreshold) * 100, 100);
-
-  useEffect(() => {
-    if (totalPrice >= freeShippingThreshold) {
-      setFreeShippingUnlocked(true);
-      setShippingCost(0);
-      setAutoDiscount(true);
-      setDiscountCode(discountForFreeShipping);
-      setDiscountValue(autoDiscountValue);
-    } else {
-      setFreeShippingUnlocked(false);
-      setAutoDiscount(false);
-      setDiscountValue(0);
-      setDiscountCode('');
-    }
-  }, [totalPrice]);
 
   const handleCheckout = () => {
     if (!paymentMethod || !deliveryMethod) {
       setCheckoutError('Selecione a forma de pagamento e entrega antes de prosseguir.');
       return;
     }
+
+    if (deliveryMethod === 'entrega' && (!cep || !logradouro || !numero)) {
+      setCheckoutError('Preencha corretamente o CEP, endereço e número da rua.');
+      return;
+    }
+
     setCheckoutError('');
     window.open(generateWhatsAppMessage(), '_blank');
   };
@@ -116,16 +98,37 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       .join('%0A');
 
     const shippingText = deliveryMethod === 'entrega'
-      ? `Frete: ${freeShippingUnlocked ? 'Grátis' : `R$ ${shippingCost?.toFixed(2) || '0.00'}`}`
+      ? `Endereço: ${logradouro}, Nº ${numero} - CEP: ${cep} - Frete: R$ ${shippingCost?.toFixed(2)}`
       : 'Retirada em loja';
 
     const paymentText = paymentMethod ? `Forma de Pagamento: ${paymentMethod}` : 'Forma de Pagamento: Não informada';
 
-    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${discountCode || 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
+    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${cupomAtivo ? discountCode : 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
+  };
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setIsCartVisible(false);
+    }
+  }, [setIsCartVisible]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLDivElement).id === 'cart-overlay') {
+      setIsCartVisible(false);
+    }
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+    <div
+      id="cart-overlay"
+      onClick={handleOverlayClick}
+      className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
+    >
       <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col md:flex-row gap-6 max-h-[90vh] overflow-y-auto">
         <button onClick={() => setIsCartVisible(false)} className="absolute top-3 right-3 text-gray-500">✖</button>
 
@@ -134,57 +137,39 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
           {cartItems.length === 0 ? (
             <p className="text-gray-500">Seu carrinho está vazio.</p>
           ) : (
-            <>
-              <div className="bg-gray-100 p-3 rounded-lg">
-                <p className="text-sm font-medium mb-1">Progresso para Frete Grátis e 20% de desconto:</p>
-                <div className="w-full bg-gray-300 h-3 rounded-lg overflow-hidden">
-                  <div className={`h-3 ${progressPercentage === 100 ? 'bg-green-500' : 'bg-yellow-500'}`} style={{ width: `${progressPercentage}%` }}></div>
-                </div>
-                <p className="text-xs text-center mt-1">
-                  {progressPercentage === 100
-                    ? 'Parabéns! Você ganhou Frete Grátis e 20% de desconto!'
-                    : `Faltam R$ ${(freeShippingThreshold - totalPrice).toFixed(2)} para Frete Grátis!`}
-                </p>
-              </div>
-
-              <ul className="space-y-4 overflow-y-auto max-h-[50vh] pr-2 mt-4">
-                {cartItems.map((item, idx) => (
-                  <li key={idx} className="flex items-center border-b pb-4 group">
-                    <div className="relative w-16 h-16 overflow-hidden rounded-lg">
-                      <Image width={64} height={64} src={item.image} alt={item.name} className="object-cover group-hover:scale-110 transition-transform duration-300" />
+            <ul className="space-y-4">
+              {cartItems.map((item, idx) => (
+                <li key={idx} className="flex items-center border-b pb-4 group">
+                  <div className="relative w-16 h-16 overflow-hidden rounded-lg">
+                    <Image width={64} height={64} src={item.image} alt={item.name} className="object-cover" />
+                  </div>
+                  <div className="ml-4 flex-grow">
+                    <p className="font-bold text-lg">{item.name}</p>
+                    <p className="text-sm text-gray-600">{item.option}</p>
+                    <p className="text-sm text-gray-600">R$ {item.price.toFixed(2)}</p>
+                    <div className="flex items-center mt-2">
+                      <button onClick={() => handleQuantityChange(idx, item.quantity - 1)} className="px-2 py-1 bg-gray-200 rounded">-</button>
+                      <span className="px-4">{item.quantity}</span>
+                      <button onClick={() => handleQuantityChange(idx, item.quantity + 1)} className="px-2 py-1 bg-gray-200 rounded">+</button>
                     </div>
-                    <div className="ml-4 flex-grow">
-                      <p className="font-bold text-lg">{item.name}</p>
-                      <p className="text-sm text-gray-600">{item.option}</p>
-                      <p className="text-sm text-gray-600">R$ {item.price.toFixed(2)}</p>
-                      <div className="flex items-center mt-2">
-                        <button onClick={() => handleQuantityChange(idx, item.quantity - 1)} className="px-2 py-1 bg-gray-200 rounded">-</button>
-                        <span className="px-4">{item.quantity}</span>
-                        <button onClick={() => handleQuantityChange(idx, item.quantity + 1)} className="px-2 py-1 bg-gray-200 rounded">+</button>
-                      </div>
-                    </div>
-                    <button onClick={() => removeItem(idx)} className="text-red-500">🗑</button>
-                  </li>
-                ))}
-              </ul>
-            </>
+                  </div>
+                  <button onClick={() => removeItem(idx)} className="text-red-500">🗑</button>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
         <div className="w-full md:w-1/3 overflow-y-auto max-h-[70vh]">
           <h3 className="font-bold">Resumo do pedido</h3>
+
           <div className="mt-4">
-           
             <label className="block text-sm text-gray-700">Forma de pagamento:</label>
-            <label className="flex items-center gap-2 mt-2">
-              <input type="radio" name="payment" value="cartao" onChange={() => setPaymentMethod('cartao')} /> Cartão
-            </label>
-            <label className="flex items-center gap-2 mt-2">
-              <input type="radio" name="payment" value="pix" onChange={() => setPaymentMethod('pix')} /> Pix
-            </label>
-            <label className="flex items-center gap-2 mt-2">
-              <input type="radio" name="payment" value="dinheiro" onChange={() => setPaymentMethod('dinheiro')} /> Dinheiro
-            </label>
+            {['cartao', 'pix', 'dinheiro'].map((type) => (
+              <label key={type} className="flex items-center gap-2 mt-2">
+                <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type as any)} /> {type.charAt(0).toUpperCase() + type.slice(1)}
+              </label>
+            ))}
           </div>
 
           <div className="mt-4">
@@ -203,7 +188,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
               <input
                 type="text"
                 value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\\D/g, ''))}
+                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
                 className="w-full p-2 border rounded-lg mt-1"
                 placeholder="Ex: 01001000"
                 maxLength={8}
@@ -212,12 +197,27 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
                 {loading ? 'Calculando...' : 'Calcular Frete'}
               </button>
               {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-              {shippingCost !== null && <p className="text-green-500 text-sm mt-2">Frete: {freeShippingUnlocked ? 'Grátis' : `R$ ${shippingCost.toFixed(2)}`}</p>}
+              {logradouro && <p className="text-green-600 text-sm mt-2">Rua: {logradouro}</p>}
+              {logradouro && (
+                <input
+                  type="text"
+                  value={numero}
+                  onChange={(e) => setNumero(e.target.value)}
+                  className="w-full p-2 border rounded-lg mt-2"
+                  placeholder="Número da residência"
+                />
+              )}
             </div>
           )}
 
-          {autoDiscount && (
-            <p className="text-green-600 text-sm mt-4 text-center font-medium">Cupom aplicado automaticamente: {discountForFreeShipping} (20% OFF)</p>
+          {cupomAtivo ? (
+            <p className="text-green-600 text-sm mt-4 text-center font-medium">
+              Cupom aplicado automaticamente: {discountCode} (20% OFF)
+            </p>
+          ) : (
+            <p className="text-yellow-600 text-sm mt-4 text-center font-medium">
+              Cupom disponível: {discountCode} (20% OFF) - válido para pedidos a partir de R$ {minTotalForDiscount}
+            </p>
           )}
 
           <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
@@ -231,7 +231,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             >
               Comprar no WhatsApp
             </button>
-           
           </div>
         </div>
       </div>
