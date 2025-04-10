@@ -129,108 +129,112 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       onClick={handleOverlayClick}
       className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50 p-4"
     >
-      <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col md:flex-row gap-6 max-h-[90vh] overflow-y-auto">
+      <div className="relative bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl flex flex-col max-h-[90vh]">
         <button onClick={() => setIsCartVisible(false)} className="absolute top-3 right-3 text-gray-500">✖</button>
 
-        <div className="w-full md:w-2/3 overflow-y-auto max-h-[70vh] pr-2">
-          <h2 className="text-2xl font-bold mb-4">Carrinho de Compra</h2>
-          {cartItems.length === 0 ? (
-            <p className="text-gray-500">Seu carrinho está vazio.</p>
-          ) : (
-            <ul className="space-y-4">
-              {cartItems.map((item, idx) => (
-                <li key={idx} className="flex items-center border-b pb-4 group">
-                  <div className="relative w-16 h-16 overflow-hidden rounded-lg">
-                    <Image width={64} height={64} src={item.image} alt={item.name} className="object-cover" />
-                  </div>
-                  <div className="ml-4 flex-grow">
-                    <p className="font-bold text-lg">{item.name}</p>
-                    <p className="text-sm text-gray-600">{item.option}</p>
-                    <p className="text-sm text-gray-600">R$ {item.price.toFixed(2)}</p>
-                    <div className="flex items-center mt-2">
-                      <button onClick={() => handleQuantityChange(idx, item.quantity - 1)} className="px-2 py-1 bg-gray-200 rounded">-</button>
-                      <span className="px-4">{item.quantity}</span>
-                      <button onClick={() => handleQuantityChange(idx, item.quantity + 1)} className="px-2 py-1 bg-gray-200 rounded">+</button>
+        <div className="flex flex-col md:flex-row gap-6 overflow-y-auto max-h-[70vh] pr-2">
+          {/* Lista de Itens */}
+          <div className="w-full md:w-2/3">
+            <h2 className="text-2xl font-bold mb-4">Carrinho de Compra</h2>
+            {cartItems.length === 0 ? (
+              <p className="text-gray-500">Seu carrinho está vazio.</p>
+            ) : (
+              <ul className="space-y-4">
+                {cartItems.map((item, idx) => (
+                  <li key={idx} className="flex items-center border-b pb-4 group">
+                    <div className="relative w-16 h-16 overflow-hidden rounded-lg">
+                      <Image width={64} height={64} src={item.image} alt={item.name} className="object-cover" />
                     </div>
-                  </div>
-                  <button onClick={() => removeItem(idx)} className="text-red-500">🗑</button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="w-full md:w-1/3 overflow-y-auto max-h-[70vh]">
-          <h3 className="font-bold">Resumo do pedido</h3>
-
-          <div className="mt-4">
-            <label className="block text-sm text-gray-700">Forma de pagamento:</label>
-            {['cartao', 'pix', 'dinheiro'].map((type) => (
-              <label key={type} className="flex items-center gap-2 mt-2">
-                <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type as any)} /> {type.charAt(0).toUpperCase() + type.slice(1)}
-              </label>
-            ))}
+                    <div className="ml-4 flex-grow">
+                      <p className="font-bold text-lg">{item.name}</p>
+                      <p className="text-sm text-gray-600">{item.option}</p>
+                      <p className="text-sm text-gray-600">R$ {item.price.toFixed(2)}</p>
+                      <div className="flex items-center mt-2">
+                        <button onClick={() => handleQuantityChange(idx, item.quantity - 1)} className="px-2 py-1 bg-gray-200 rounded">-</button>
+                        <span className="px-4">{item.quantity}</span>
+                        <button onClick={() => handleQuantityChange(idx, item.quantity + 1)} className="px-2 py-1 bg-gray-200 rounded">+</button>
+                      </div>
+                    </div>
+                    <button onClick={() => removeItem(idx)} className="text-red-500">🗑</button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          <div className="mt-4">
-            <label className="block font-medium">Forma de entrega:</label>
-            <label className="flex items-center gap-2 mt-2">
-              <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('retirada')} /> Retirada em loja
-            </label>
-            <label className="flex items-center gap-2 mt-2">
-              <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('entrega')} /> Entrega pela loja
-            </label>
-          </div>
+          {/* Resumo do Pedido */}
+          <div className="w-full md:w-1/3">
+            <h3 className="font-bold">Resumo do pedido</h3>
 
-          {deliveryMethod === 'entrega' && (
             <div className="mt-4">
-              <label className="block text-sm text-gray-700">Digite seu CEP:</label>
-              <input
-                type="text"
-                value={cep}
-                onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
-                className="w-full p-2 border rounded-lg mt-1"
-                placeholder="Ex: 01001000"
-                maxLength={8}
-              />
-              <button onClick={fetchShippingCost} className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg">
-                {loading ? 'Calculando...' : 'Calcular Frete'}
-              </button>
-              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-              {logradouro && <p className="text-green-600 text-sm mt-2">Rua: {logradouro}</p>}
-              {logradouro && (
+              <label className="block text-sm text-gray-700">Forma de pagamento:</label>
+              {['cartao', 'pix', 'dinheiro'].map((type) => (
+                <label key={type} className="flex items-center gap-2 mt-2">
+                  <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type as any)} /> {type.charAt(0).toUpperCase() + type.slice(1)}
+                </label>
+              ))}
+            </div>
+
+            <div className="mt-4">
+              <label className="block font-medium">Forma de entrega:</label>
+              <label className="flex items-center gap-2 mt-2">
+                <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('retirada')} /> Retirada em loja
+              </label>
+              <label className="flex items-center gap-2 mt-2">
+                <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('entrega')} /> Entrega pela loja
+              </label>
+            </div>
+
+            {deliveryMethod === 'entrega' && (
+              <div className="mt-4">
+                <label className="block text-sm text-gray-700">Digite seu CEP:</label>
                 <input
                   type="text"
-                  value={numero}
-                  onChange={(e) => setNumero(e.target.value)}
-                  className="w-full p-2 border rounded-lg mt-2"
-                  placeholder="Número da residência"
+                  value={cep}
+                  onChange={(e) => setCep(e.target.value.replace(/\D/g, ''))}
+                  className="w-full p-2 border rounded-lg mt-1"
+                  placeholder="Ex: 01001000"
+                  maxLength={8}
                 />
-              )}
+                <button onClick={fetchShippingCost} className="mt-2 w-full bg-blue-500 text-white py-2 rounded-lg">
+                  {loading ? 'Calculando...' : 'Calcular Frete'}
+                </button>
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {logradouro && <p className="text-green-600 text-sm mt-2">Rua: {logradouro}</p>}
+                {logradouro && (
+                  <input
+                    type="text"
+                    value={numero}
+                    onChange={(e) => setNumero(e.target.value)}
+                    className="w-full p-2 border rounded-lg mt-2"
+                    placeholder="Número da residência"
+                  />
+                )}
+              </div>
+            )}
+
+            {cupomAtivo ? (
+              <p className="text-green-600 text-sm mt-4 text-center font-medium">
+                Cupom aplicado automaticamente: {discountCode} (20% OFF)
+              </p>
+            ) : (
+              <p className="text-yellow-600 text-sm mt-4 text-center font-medium">
+                Cupom disponível: {discountCode} (20% OFF) - válido para pedidos a partir de R$ {minTotalForDiscount}
+              </p>
+            )}
+
+            <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
+            {checkoutError && <p className="text-red-500 text-sm text-center mt-2">{checkoutError}</p>}
+
+            <div className="mt-4 flex flex-col gap-2">
+              <button onClick={() => setCartItems([])} className="bg-red-500 text-white py-2 rounded-lg">Limpar Carrinho</button>
+              <button
+                onClick={handleCheckout}
+                className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors w-full md:w-auto text-center"
+              >
+                Comprar no WhatsApp
+              </button>
             </div>
-          )}
-
-          {cupomAtivo ? (
-            <p className="text-green-600 text-sm mt-4 text-center font-medium">
-              Cupom aplicado automaticamente: {discountCode} (20% OFF)
-            </p>
-          ) : (
-            <p className="text-yellow-600 text-sm mt-4 text-center font-medium">
-              Cupom disponível: {discountCode} (20% OFF) - válido para pedidos a partir de R$ {minTotalForDiscount}
-            </p>
-          )}
-
-          <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
-          {checkoutError && <p className="text-red-500 text-sm text-center mt-2">{checkoutError}</p>}
-
-          <div className="mt-4 flex flex-col gap-2">
-            <button onClick={() => setCartItems([])} className="bg-red-500 text-white py-2 rounded-lg">Limpar Carrinho</button>
-            <button
-              onClick={handleCheckout}
-              className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors w-full md:w-auto text-center"
-            >
-              Comprar no WhatsApp
-            </button>
           </div>
         </div>
       </div>
