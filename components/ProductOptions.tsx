@@ -56,15 +56,6 @@ const sizePrices: Record<string, ProductOption[]> = {
   ],
 };
 
-const extras: ProductOption[] = [
-  { name: "Nutella", price: 3.5 },
-  { name: "Paçoca", price: 2.5 },
-  { name: "Castanhas", price: 2.5 },
-  { name: "M&M", price: 2.5 },
-  { name: "Granulado", price: 2 },
-  { name: "Uva Verde", price: 3 },
-  { name: "Morango", price: 3 },
-];
 
 const basketSizes: ProductOption[] = [
   { name: "Pequena", price: 20 },
