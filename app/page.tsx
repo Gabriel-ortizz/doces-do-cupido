@@ -76,7 +76,7 @@ const App: React.FC = () => {
     {
       name: "Bolo de Pote",
       image: "/img/bolo.de.pote.jpg",
-      disponivel: true,
+      disponivel: false,
       options: [
         { name: "Limão", price: 2.5 },
       ],

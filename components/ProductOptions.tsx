@@ -1,4 +1,3 @@
-// ProductOptions.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -26,20 +25,20 @@ const specialProduct = "Cesta Personalizada";
 const chocolates = ["Ao Leite", "Meio Amargo", "Branco", "Pistache"];
 
 const productFillings: Record<string, string[]> = {
-  "Ovo de Colher": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Ovo Gourmet": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella","Ninho c/ Morango"],
-  "Trufas": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Mini Trufas": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Barras": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Coração": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Ovos Kids": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Ovos faça em casa": ["Limão", "Brigadeiro", "Morango", "Beijinho","Maracujá","Paçoca"],
-  "Bolo de Pote": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella","Ninho c/ Morango", "Brigadeiro", "Beijinho"]
+  "Ovo de Colher": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Ovo Gourmet": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella", "Ninho c/ Morango"],
+  "Trufas": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Mini Trufas": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Barras": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Coração": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Ovos Kids": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Ovos faça em casa": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
+  "Bolo de Pote": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella", "Ninho c/ Morango", "Brigadeiro", "Beijinho"]
 };
 
 const chocolateExtraPrice: Record<string, { normal: number; custom: number }> = {
   "Ao Leite": { normal: 0, custom: 0 },
-  "Meio Amargo": { normal: 3.5, custom:4.5 },
+  "Meio Amargo": { normal: 3.5, custom: 4.5 },
   "Branco": { normal: 3.5, custom: 5.5 },
   "Pistache": { normal: 7, custom: 8.5 },
 };
@@ -150,7 +149,7 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
 
   return (
     <div className="fixed inset-0 flex justify-center bg-black bg-opacity-50 z-50">
-      <div ref={modalRef} className="w-80 sm:w-96 bg-white max-h-screen shadow-xl p-6 relative overflow-y-auto rounded-2xl">
+      <div ref={modalRef} className="w-80 sm:w-96 bg-white max-h-screen shadow-xl p-6 relative transform transition-transform duration-300 ease-in-out overflow-y-auto rounded-2xl">
         <button
           onClick={() => setSelectedProduct(null)}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -164,25 +163,33 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
             <div className="grid grid-cols-2 gap-2 mb-4">
               {basketSizes.map((size) => (
                 <Button
-                  key={size.name}
-                  onClick={() => setSelectedSize(size)}
-                  variant={selectedSize?.name === size.name ? "default" : "outline"}
-                >
-                  {size.name}
-                </Button>
+                key={size.name}
+                onClick={() => setSelectedSize(size)}
+                className={`border-2 rounded-lg px-4 py-2 font-semibold transition-all
+                  ${selectedSize?.name === size.name
+                    ? "border-pink-500 bg-pink-100 text-pink-700"
+                    : "border-gray-300 bg-white text-gray-800 hover:border-pink-300"}`}
+              >
+                {size.name}
+              </Button>
+              
               ))}
             </div>
 
             <p className="font-semibold mb-2">Escolha os itens para a cesta:</p>
             <div className="grid grid-cols-2 gap-2 mb-4">
               {basketItems.map((item) => (
-                <Button
-                  key={item.name}
-                  onClick={() => toggleExtra(item)}
-                  variant={selectedExtras.some((e) => e.name === item.name) ? "default" : "outline"}
-                >
-                  {item.name}
-                </Button>
+               <Button
+               key={item.name}
+               onClick={() => toggleExtra(item)}
+               className={`border-2 rounded-lg px-4 py-2 font-semibold transition-all
+                 ${selectedExtras.some((e) => e.name === item.name)
+                   ? "border-pink-500 bg-pink-100 text-pink-700"
+                   : "border-gray-300 bg-white text-gray-800 hover:border-pink-300"}`}
+             >
+               {item.name}
+             </Button>
+             
               ))}
             </div>
           </>
@@ -195,6 +202,10 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
                   key={filling}
                   variant={selectedFilling === filling ? "default" : "outline"}
                   onClick={() => setSelectedFilling(filling)}
+                  className={`border-2 rounded-lg px-4 py-2 font-semibold transition-all
+                    ${selectedFilling === filling 
+                      ? "border-pink-500 bg-pink-100 text-pink-700" 
+                      : "border-gray-300 bg-white text-gray-800 hover:border-pink-300"}`}
                 >
                   {filling}
                 </Button>
@@ -207,12 +218,16 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   {chocolates.map((choc) => (
                     <Button
-                      key={choc}
-                      onClick={() => setSelectedChocolate(choc)}
-                      variant={selectedChocolate === choc ? "default" : "outline"}
-                    >
-                      {choc}
-                    </Button>
+                    key={choc}
+                    onClick={() => setSelectedChocolate(choc)}
+                    className={`border-2 rounded-lg px-4 py-2 font-semibold transition-all
+                      ${selectedChocolate === choc
+                        ? "border-pink-500 bg-pink-100 text-pink-700"
+                        : "border-gray-300 bg-white text-gray-800 hover:border-pink-300"}`}
+                  >
+                    {choc}
+                  </Button>
+                  
                   ))}
                 </div>
               </>
@@ -266,4 +281,3 @@ const ProductOptions: React.FC<ProductOptionsProps> = ({
 };
 
 export default ProductOptions;
-
