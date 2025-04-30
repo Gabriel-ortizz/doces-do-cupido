@@ -15,8 +15,8 @@ interface CartProps {
   setIsCartVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type DeliveryMethod = 'Retirada' | 'Entrega';
-type PaymentMethod = 'Cartao' | 'Pix' | 'Dinheiro';
+type DeliveryMethod = 'retirada' | 'entrega';
+type PaymentMethod = 'cartao' | 'pix' | 'dinheiro';
 
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
   const [cep, setCep] = useState('');
@@ -81,7 +81,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       return;
     }
 
-    if (deliveryMethod === 'Entrega' && (!cep || !logradouro || !numero)) {
+    if (deliveryMethod === 'entrega' && (!cep || !logradouro || !numero)) {
       setCheckoutError('Preencha corretamente o CEP, endereço e número da rua.');
       return;
     }
@@ -95,7 +95,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       .map(item => `• ${item.quantity}x ${item.name} (${item.option}) - R$ ${item.price.toFixed(2)}`)
       .join('%0A');
 
-    const shippingText = deliveryMethod === 'Entrega'
+    const shippingText = deliveryMethod === 'entrega'
       ? `Endereço: ${logradouro}, Nº ${numero} - CEP: ${cep} - Frete: R$ ${shippingCost?.toFixed(2)}`
       : 'Retirada em loja';
 
@@ -166,7 +166,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
             <div className="mt-4">
               <label className="block text-sm text-gray-700">Forma de pagamento:</label>
-              {(['Cartao', 'Pix', 'Dinheiro'] as PaymentMethod[]).map((type) => (
+              {(['cartao', 'pix', 'dinheiro'] as PaymentMethod[]).map((type) => (
                 <label key={type} className="flex items-center gap-2 mt-2">
                   <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type)} />
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -177,14 +177,14 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             <div className="mt-4">
               <label className="block font-medium">Forma de entrega:</label>
               <label className="flex items-center gap-2 mt-2">
-                <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('Retirada')} /> Retirada em loja
+                <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('retirada')} /> Retirada em loja
               </label>
               <label className="flex items-center gap-2 mt-2">
-                <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('Entrega')} /> Entrega pela loja
+                <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('entrega')} /> Entrega pela loja
               </label>
             </div>
 
-            {deliveryMethod === 'Entrega' && (
+            {deliveryMethod === 'entrega' && (
               <div className="mt-4">
                 <label className="block text-sm text-gray-700">Digite seu CEP:</label>
                 <input
