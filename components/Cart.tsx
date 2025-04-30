@@ -29,9 +29,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
   const [checkoutError, setCheckoutError] = useState('');
   const whatsappNumber = '5521991453401';
-  const discountCode = 'DESCONTO20';
-  const discountValue = 0.2;
-  const minTotalForDiscount = 50;
 
   const fetchShippingCost = async () => {
     if (cep.length !== 8) {
@@ -76,9 +73,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cupomAtivo = totalPrice >= minTotalForDiscount;
-  const discountAmount = cupomAtivo ? totalPrice * discountValue : 0;
-  const finalTotal = (totalPrice - discountAmount + (shippingCost || 0)).toFixed(2);
+  const finalTotal = (totalPrice + (shippingCost || 0)).toFixed(2);
 
   const handleCheckout = () => {
     if (!paymentMethod || !deliveryMethod) {
@@ -106,7 +101,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
     const paymentText = paymentMethod ? `Forma de Pagamento: ${paymentMethod}` : 'Forma de Pagamento: Não informada';
 
-    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${cupomAtivo ? discountCode : 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
+    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
   };
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -215,16 +210,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
                   />
                 )}
               </div>
-            )}
-
-            {cupomAtivo ? (
-              <p className="text-green-600 text-sm mt-4 text-center font-medium">
-                Cupom aplicado automaticamente: {discountCode} (20% OFF)
-              </p>
-            ) : (
-              <p className="text-yellow-600 text-sm mt-4 text-center font-medium">
-                Cupom disponível: {discountCode} (20% OFF) - válido para pedidos a partir de R$ {minTotalForDiscount}
-              </p>
             )}
 
             <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
