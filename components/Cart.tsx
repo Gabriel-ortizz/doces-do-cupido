@@ -15,8 +15,8 @@ interface CartProps {
   setIsCartVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type DeliveryMethod = 'retirada' | 'entrega';
-type PaymentMethod = 'cartao' | 'pix' | 'dinheiro';
+type DeliveryMethod = 'Retirada' | 'Entrega';
+type PaymentMethod = 'Cartao' | 'Pix' | 'Dinheiro';
 
 const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisible }) => {
   const [cep, setCep] = useState('');
@@ -29,9 +29,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | null>(null);
   const [checkoutError, setCheckoutError] = useState('');
   const whatsappNumber = '5521991453401';
-  const discountCode = 'DESCONTO20';
-  const discountValue = 0.2;
-  const minTotalForDiscount = 50;
 
   const fetchShippingCost = async () => {
     if (cep.length !== 8) {
@@ -76,9 +73,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const cupomAtivo = totalPrice >= minTotalForDiscount;
-  const discountAmount = cupomAtivo ? totalPrice * discountValue : 0;
-  const finalTotal = (totalPrice - discountAmount + (shippingCost || 0)).toFixed(2);
+  const finalTotal = (totalPrice + (shippingCost || 0)).toFixed(2);
 
   const handleCheckout = () => {
     if (!paymentMethod || !deliveryMethod) {
@@ -86,7 +81,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       return;
     }
 
-    if (deliveryMethod === 'entrega' && (!cep || !logradouro || !numero)) {
+    if (deliveryMethod === 'Entrega' && (!cep || !logradouro || !numero)) {
       setCheckoutError('Preencha corretamente o CEP, endereço e número da rua.');
       return;
     }
@@ -100,13 +95,13 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
       .map(item => `• ${item.quantity}x ${item.name} (${item.option}) - R$ ${item.price.toFixed(2)}`)
       .join('%0A');
 
-    const shippingText = deliveryMethod === 'entrega'
+    const shippingText = deliveryMethod === 'Entrega'
       ? `Endereço: ${logradouro}, Nº ${numero} - CEP: ${cep} - Frete: R$ ${shippingCost?.toFixed(2)}`
       : 'Retirada em loja';
 
     const paymentText = paymentMethod ? `Forma de Pagamento: ${paymentMethod}` : 'Forma de Pagamento: Não informada';
 
-    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0ACupom: ${cupomAtivo ? discountCode : 'Nenhum'}%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
+    return `https://wa.me/${whatsappNumber}?text=Pedido:%0A${itemsText}%0A%0A${shippingText}%0A${paymentText}%0A%0ATotal: R$ ${finalTotal}`;
   };
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -171,7 +166,7 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
 
             <div className="mt-4">
               <label className="block text-sm text-gray-700">Forma de pagamento:</label>
-              {(['cartao', 'pix', 'dinheiro'] as PaymentMethod[]).map((type) => (
+              {(['Cartao', 'Pix', 'Dinheiro'] as PaymentMethod[]).map((type) => (
                 <label key={type} className="flex items-center gap-2 mt-2">
                   <input type="radio" name="payment" value={type} onChange={() => setPaymentMethod(type)} />
                   {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -182,14 +177,14 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
             <div className="mt-4">
               <label className="block font-medium">Forma de entrega:</label>
               <label className="flex items-center gap-2 mt-2">
-                <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('retirada')} /> Retirada em loja
+                <input type="radio" name="delivery" value="retirada" onChange={() => setDeliveryMethod('Retirada')} /> Retirada em loja
               </label>
               <label className="flex items-center gap-2 mt-2">
-                <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('entrega')} /> Entrega pela loja
+                <input type="radio" name="delivery" value="entrega" onChange={() => setDeliveryMethod('Entrega')} /> Entrega pela loja
               </label>
             </div>
 
-            {deliveryMethod === 'entrega' && (
+            {deliveryMethod === 'Entrega' && (
               <div className="mt-4">
                 <label className="block text-sm text-gray-700">Digite seu CEP:</label>
                 <input
@@ -215,16 +210,6 @@ const Cart: React.FC<CartProps> = ({ cartItems = [], setCartItems, setIsCartVisi
                   />
                 )}
               </div>
-            )}
-
-            {cupomAtivo ? (
-              <p className="text-green-600 text-sm mt-4 text-center font-medium">
-                Cupom aplicado automaticamente: {discountCode} (20% OFF)
-              </p>
-            ) : (
-              <p className="text-yellow-600 text-sm mt-4 text-center font-medium">
-                Cupom disponível: {discountCode} (20% OFF) - válido para pedidos a partir de R$ {minTotalForDiscount}
-              </p>
             )}
 
             <p className="font-bold text-xl text-center mt-4">Total: R$ {finalTotal}</p>
