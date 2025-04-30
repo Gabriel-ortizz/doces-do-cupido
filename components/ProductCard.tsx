@@ -11,6 +11,7 @@ interface Product {
   name: string;
   image: string;
   options: ProductOption[];
+  disponivel?: boolean;
 }
 
 interface ProductCardProps {
@@ -32,9 +33,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect }) => {
       <div className="mt-2 flex flex-col gap-2">
         <Button
           onClick={() => onSelect(product.name)}
-          className="bg-pink-500 text-white hover:bg-pink-600"
+          className="bg-pink-500 text-white hover:bg-pink-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={!product.disponivel}
         >
-          Ver Opções
+          {product.disponivel ? 'Ver Opções' : 'Em breve'}
         </Button>
       </div>
     </div>
