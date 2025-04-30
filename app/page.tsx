@@ -112,6 +112,7 @@ const App: React.FC = () => {
       image: "/img/coraçao_de_chocolate.jpg",
       disponivel: true,
       options: [
+
         { name: "Limão", price: 6.5 },
         { name: "Morango", price: 6.5 },
         { name: "Brigadeiro", price: 6.5 },
@@ -120,6 +121,7 @@ const App: React.FC = () => {
         { name: "Amendoim", price: 6.5 },
       ],
     },
+  
    
   ];
 

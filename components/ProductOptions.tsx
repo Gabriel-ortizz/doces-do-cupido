@@ -25,6 +25,7 @@ const specialProduct = "Cesta Personalizada";
 const chocolates = ["Ao Leite", "Meio Amargo", "Branco", "Pistache"];
 
 const productFillings: Record<string, string[]> = {
+
   "Ovo de Colher": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
   "Ovo Gourmet": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella", "Ninho c/ Morango"],
   "Trufas": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
@@ -34,6 +35,7 @@ const productFillings: Record<string, string[]> = {
   "Ovos Kids": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
   "Ovos faça em casa": ["Limão", "Brigadeiro", "Morango", "Beijinho", "Maracujá", "Paçoca"],
   "Bolo de Pote": ["Ferrero-Rocher", "KitKat", "Oreo", "Ninho c/ Nutella", "Ninho c/ Morango", "Brigadeiro", "Beijinho"]
+
 };
 
 const chocolateExtraPrice: Record<string, { normal: number; custom: number }> = {
